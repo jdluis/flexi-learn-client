@@ -24,22 +24,19 @@ export default function Root() {
 
     navigate("/");
   };
-  if (isLoggedIn === true) {
-    return (
-      <div>
-        <ul>
-          <li>
-            <NavLink to={`/`}>Home</NavLink>
-          </li>
-        </ul>
-        <button onClick={handleLogOut}>Log Out</button>
-      </div>
-    );
-  } else {
-    return (
-      <>
-        <nav>
-          <ul>
+
+  return (
+    <nav className=" bg-slate-400 p-4">
+      <ul className="flex justify-evenly items-center">
+        {isLoggedIn ? (
+          <>
+            <li>
+              <NavLink to={`/`}>Home</NavLink>
+            </li>
+            <button onClick={handleLogOut}>Log Out</button>
+          </>
+        ) : (
+          <>
             <li>
               <NavLink to={`/`}>Home</NavLink>
             </li>
@@ -49,9 +46,9 @@ export default function Root() {
             <li>
               <NavLink to={`/signup`}>SignUp</NavLink>
             </li>
-          </ul>
-        </nav>
-      </>
-    );
-  }
+          </>
+        )}
+      </ul>
+    </nav>
+  );
 }
