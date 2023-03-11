@@ -15,7 +15,6 @@ function SearchCourses(props) {
     strToSearch,
   } = props;
 
-  console.log(topic, strToSearch);
   const handleTopicChange = (e) => {
     setAlltopic(e.target.value);
   };

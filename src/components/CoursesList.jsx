@@ -53,7 +53,6 @@ function CoursesList() {
   };
 
   //Guard Clause
-  console.log({ all: allCourses, my: allMyCourses, render: renderCourses });
   if (allCourses === null || allMyCourses === null || renderCourses === null) {
     return "Loading";
   }
