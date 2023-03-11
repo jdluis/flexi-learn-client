@@ -23,19 +23,17 @@ function Login() {
     }
     try {
         const response = await loginService(user)
-        console.log(response);
         navigate('/')
 
         localStorage.setItem("authToken", response.data.authToken)
 
         authenticateUser()
-        console.log("si lo vemos esta crema validado el token")
     } catch (error) {
         if (error.response.status === 400) {
             // mostramos al usuario como solventar el problema
             loginService(error.response.data.errorMessage)
           } else {
-            navigate("/error");
+            console.log(error)
           }
     }
   };

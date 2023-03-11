@@ -1,7 +1,19 @@
-import React from "react";
+import { AuthContext } from "../context/auth.context";
+import { useContext } from "react";
 
 function SearchCourses(props) {
-  const { setAlltopic, setAllStrToSearch, topic, strToSearch } = props;
+  //Context States
+  const { isInstructor } = useContext(AuthContext);
+
+  const {
+    isMyCourses,
+    setIsMyCourses,
+    setAlltopic,
+    checkIsMyCourses,
+    setAllStrToSearch,
+    topic,
+    strToSearch,
+  } = props;
 
   console.log(topic, strToSearch);
   const handleTopicChange = (e) => {
@@ -10,8 +22,22 @@ function SearchCourses(props) {
   const handleSearchChange = (e) => {
     setAllStrToSearch(e.target.value);
   };
+
+  const handleCourses = () => {
+    setIsMyCourses(!isMyCourses);
+    checkIsMyCourses(isMyCourses);
+  };
+
   return (
     <div className="flex">
+      {isInstructor && (
+        <input
+          value={isMyCourses ? "All Courses" : "My Courses"}
+          type="button"
+          onClick={handleCourses}
+          className="px-2 rounded-l bg-white text-slate-700 active:opacity-70 hover:opacity-70"
+        />
+      )}
       <select
         className="px-2 rounded-l text-slate-700"
         value={topic}

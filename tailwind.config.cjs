@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      cursor: {
+        'pointer': 'pointer',
+      },
+    },
   },
   fontFamily: {
     sans: ['Graphik', 'sans-serif'],

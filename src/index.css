@@ -6,7 +6,7 @@ html {
   height: 100%;
 }
 body {
-  background-image: linear-gradient(
+  background: linear-gradient(
     to bottom,
     #051937,
     #003049,
@@ -19,4 +19,8 @@ body {
 
 .text-shadow-black {
   text-shadow: -2px 4px 8px rgba(101, 210, 118, 0.82);
+}
+
+input[type="button"], button {
+  @apply cursor-pointer;
 }
