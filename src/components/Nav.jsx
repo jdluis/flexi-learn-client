@@ -26,7 +26,7 @@ export default function Root() {
   };
 
   return (
-    <nav className=" bg-slate-400 p-4">
+    <nav className="bg-slate-400 p-4 fixed w-full top-0">
       <ul className="flex justify-evenly items-center">
         {isLoggedIn ? (
           <>

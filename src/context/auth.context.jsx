@@ -7,7 +7,10 @@ function AuthWrapper(props) {
   // nuestros estados de auth
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState(null);
+  const [isInstructor, setIsInstructor] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
+  const [loggedInstructorId, setIsLoggedInstructorId] = useState(null);
+  const [loggedStudentId, setLoggedStudentId] = useState(null);
 
   // nuestras funciones de auth
 
@@ -17,7 +20,15 @@ function AuthWrapper(props) {
     try {
       const response = await verifyService();
       console.log("Token es valido");
-      console.log(response);
+
+      if (response.data.instructor) {
+        setIsLoggedInstructorId(response.data.instructor);
+        setIsInstructor(true);
+      } else {
+        setLoggedStudentId(response.data.student);
+        setIsInstructor(false);
+      }
+
       setIsLoggedIn(true);
       setLoggedUser(response.data);
       setIsFetching(false);
@@ -30,8 +41,11 @@ function AuthWrapper(props) {
   };
 
   const passedContext = {
+    isInstructor,
     isLoggedIn,
     loggedUser,
+    loggedInstructorId,
+    loggedStudentId,
     authenticateUser,
   };
 
