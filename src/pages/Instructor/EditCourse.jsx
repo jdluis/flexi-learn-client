@@ -25,6 +25,7 @@ function EditCourse() {
   const [totalDuration, setTotalDuration] = useState(0);
   const [lectures, setLectures] = useState([]);
   const [coverImg_url, setCoverImg_url] = useState("");
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const [courseForEdit, setCourseForEdit] = useState({});
 
@@ -65,12 +66,9 @@ function EditCourse() {
   };
 
   useEffect(() => {
-    handleTotalDurationChange();
-  }, [lectures.length]);
-
-  useEffect(() => {
     getCourse();
-  }, []);
+    handleTotalDurationChange();
+  }, [lectures.length, isDeleted]);
 
   const getCourse = async () => {
     try {
@@ -101,8 +99,11 @@ function EditCourse() {
   };
 
   const handleDeleteLecture = async (idLecture) => {
+    setIsDeleted(false);
     try {
       await deleteLectureService(idLecture);
+
+      setIsDeleted(true);
     } catch (err) {
       console.log(err);
     }
@@ -144,6 +145,7 @@ function EditCourse() {
   const handleDelete = async () => {
     try {
       await deleteCoursesService(id);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -160,7 +162,7 @@ function EditCourse() {
               </h1>
               <p>Change the info of course course</p>
             </div>
-            <form onSubmit={handleUpdateCourse}>
+            <div>
               <div className="flex -mx-3">
                 <div className="w-full px-3 mb-5">
                   <label className="text-xs font-semibold px-1">Topic</label>
@@ -331,7 +333,10 @@ function EditCourse() {
 
               <div className="flex mt-5 mx-3">
                 <div className="w-full px-3 mb-5 flex gap-3">
-                  <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold">
+                  <button
+                    onClick={handleUpdateCourse}
+                    className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold"
+                  >
                     Update
                   </button>
                   <button
@@ -342,7 +347,7 @@ function EditCourse() {
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
