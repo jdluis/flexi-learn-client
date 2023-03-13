@@ -100,9 +100,9 @@ function EditCourse() {
     }
   };
 
-  const handleDeleteLecture = async () => {
+  const handleDeleteLecture = async (idLecture) => {
     try {
-      await deleteLectureService(id);
+      await deleteLectureService(idLecture);
     } catch (err) {
       console.log(err);
     }

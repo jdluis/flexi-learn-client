@@ -4,9 +4,7 @@ import { addCoursesService } from "../../services/courses.services";
 import AddLectures from "./AddLectures";
 
 import Modal from "react-modal";
-import {
-  addLecturesService,
-} from "../../services/lectures.services";
+import { addLecturesService } from "../../services/lectures.services";
 //Define parent root of Modal, for screen readers
 Modal.setAppElement("#root");
 
@@ -54,14 +52,14 @@ function AddCourse() {
 
   //The result of the sum of each lecture
   const handleTotalDurationChange = () => {
-    lectures.forEach(lecture => {
-      setTotalDuration(Number(totalDuration) + Number(lecture.duration) )
-    })
+    lectures.forEach((lecture) => {
+      setTotalDuration(Number(totalDuration) + Number(lecture.duration));
+    });
   };
 
   useEffect(() => {
-    handleTotalDurationChange()
-  },[lectures.length])
+    handleTotalDurationChange();
+  }, [lectures.length]);
 
   const handleAddCourse = async (e) => {
     e.preventDefault();
@@ -77,7 +75,7 @@ function AddCourse() {
         coverImg_url,
       };
       const newCourse = await addCoursesService(newCourseData);
-      console.log("ID EN ADD course: ", newCourse.data._id)
+
       lectures.forEach(async (lecture) => {
         await addLecturesService(lecture, newCourse.data._id);
       });

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { addLecturesService } from "../../services/lectures.services";
 
 function AddLectures(props) {
+  const currentPath = useLocation();
   const { id } = useParams();
-  console.log("ID EN ADD LECTURE: ", id)
+
   //Locals States
   const [title, setTitle] = useState("");
   const [video_url, setVideo_url] = useState("");
@@ -27,7 +28,7 @@ function AddLectures(props) {
     setDuration(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleLectureSubmit = async (e) => {
     e.preventDefault();
 
     const newLecture = {
@@ -38,25 +39,25 @@ function AddLectures(props) {
     };
 
     //When the course need to be created
-
-    setLectures((actualLectures) => {
-      return [...actualLectures, newLecture];
-    });
-
-    //when the course need to be updated
-    try {
-      const addLecture = await addLecturesService(newLecture, id);
-      console.log(addLecture)
-
-      handleCloseModal();
-    } catch (err) {
-     // setError ("Sorry, we couldn't send this data, try to change the")
-      console.log(err);
+    if (currentPath.pathname === "/courses/add") {
+      setLectures((actualLectures) => {
+        return [...actualLectures, newLecture];
+      });
+    } else {
+      //when the course need to be updated
+      try {
+        const addLecture = await addLecturesService(newLecture, id);
+        console.log(addLecture);
+      } catch (err) {
+        // setError ("Sorry, we couldn't send this data, try to change the")
+        console.log(err);
+      }
     }
+    handleCloseModal();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <h2 className="text-gray-800 border-b-2 text-xl font-bold">Lectures</h2>
       <div className="flex -mx-3">
         <div className="text-gray-400 w-full px-3 mb-12">
@@ -125,7 +126,10 @@ function AddLectures(props) {
       </div>
       <div className="flex -mx-3">
         <div className="w-full px-3 mb-5 flex gap-3">
-          <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold">
+          <button
+            onClick={handleLectureSubmit}
+            className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold"
+          >
             Add
           </button>
           <button
@@ -136,7 +140,7 @@ function AddLectures(props) {
           </button>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 
