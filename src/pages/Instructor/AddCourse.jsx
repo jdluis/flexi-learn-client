@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { addCoursesService } from "../../services/courses.services";
 import AddLectures from "./AddLectures";
@@ -6,7 +6,6 @@ import AddLectures from "./AddLectures";
 import Modal from "react-modal";
 import {
   addLecturesService,
-  allLecturesService,
 } from "../../services/lectures.services";
 //Define parent root of Modal, for screen readers
 Modal.setAppElement("#root");
@@ -18,6 +17,7 @@ function AddCourse() {
   //Locals States
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
+  const [level, setLevel] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
@@ -27,6 +27,10 @@ function AddCourse() {
   const [showModal, setShowModal] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
+
+  const handleLevelChange = (e) => {
+    setLevel(e.target.value);
+  };
 
   const hanleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -41,38 +45,41 @@ function AddCourse() {
   const hanlePriceChange = (e) => {
     setPrice(e.target.value);
   };
-  const hanleLecturesChange = (e) => {
+  /* const hanleLecturesChange = (e) => {
     setLectures(e.target.value);
-  };
+  }; */
   const handleCoverImgChange = (e) => {
     setCoverImg_url(e.target.value);
   };
 
   //The result of the sum of each lecture
-  const handleTotalDurationChange = (e) => {
-    setTotalDuration(e.target.value);
+  const handleTotalDurationChange = () => {
+    lectures.forEach(lecture => {
+      setTotalDuration(Number(totalDuration) + Number(lecture.duration) )
+    })
   };
 
-  /*   const getLectures = () => {
-
-  } */
+  useEffect(() => {
+    handleTotalDurationChange()
+  },[lectures.length])
 
   const handleAddCourse = async (e) => {
     e.preventDefault();
 
     try {
-      const newUser = {
+      const newCourseData = {
         title,
         topic,
+        level,
         description,
         price,
         totalDuration,
         coverImg_url,
       };
-      const newCourse = await addCoursesService(newUser);
-
+      const newCourse = await addCoursesService(newCourseData);
+      console.log("ID EN ADD course: ", newCourse.data._id)
       lectures.forEach(async (lecture) => {
-        await addLecturesService(lecture, newCourse.data.data._id);
+        await addLecturesService(lecture, newCourse.data._id);
       });
 
       navigate("/");
@@ -96,8 +103,6 @@ function AddCourse() {
 
   const handleClose = (e) => {
     e.preventDefault();
-    //Eliminar todas las lectures creadas a partir de este course
-    //Volver a la pagina principal
     navigate("/");
   };
 
@@ -116,7 +121,7 @@ function AddCourse() {
           <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
             <div className="text-center mb-10">
               <h1 className="font-bold text-3xl text-gray-900">Add Course</h1>
-              <p>Enter your information to register</p>
+              <p>Add a new course in your carrear</p>
             </div>
             <form onSubmit={handleAddCourse}>
               <div className="flex -mx-3">
@@ -138,6 +143,30 @@ function AddCourse() {
                       <option value="healthy">Healthy</option>
                       <option value="psychology">Psychology</option>
                       <option value="marketing">Marketing</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="flex -mx-3">
+                <div className="w-full px-3 mb-5">
+                  <label className="text-xs font-semibold px-1">Level</label>
+                  <div className="flex">
+                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                      <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
+                    </div>
+                    <select
+                      defaultValue={""}
+                      onChange={handleLevelChange}
+                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                    >
+                      <option disabled value="">
+                        Select One
+                      </option>
+                      <option value="beginner">Beginner</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                      <option value="expert">Expert</option>
+                      <option value="all">All</option>
                     </select>
                   </div>
                 </div>
@@ -190,7 +219,7 @@ function AddCourse() {
                     <input
                       value={description}
                       onChange={hanleDescriptionChange}
-                      type="topic"
+                      type="text"
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                       placeholder="Description"
                     />
@@ -261,8 +290,6 @@ function AddCourse() {
               <Modal isOpen={showModal}>
                 <AddLectures
                   setLectures={setLectures}
-                  hanleLecturesChange={hanleLecturesChange}
-                  handleTotalDurationChange={handleTotalDurationChange}
                   handleCloseModal={handleCloseModal}
                 />
               </Modal>

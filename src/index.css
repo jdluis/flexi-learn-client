@@ -21,6 +21,10 @@ body {
   text-shadow: -2px 4px 8px rgba(101, 210, 118, 0.82);
 }
 
+.btn:hover {
+  opacity: .6;
+}
+
 input[type="button"], button {
   @apply cursor-pointer;
 }

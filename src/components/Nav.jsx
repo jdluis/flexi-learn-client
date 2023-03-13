@@ -33,6 +33,9 @@ export default function Root() {
             <li>
               <NavLink to={`/`}>Home</NavLink>
             </li>
+            <li>
+              <NavLink to={`/profile`}>Profile</NavLink>
+            </li>
             <button onClick={handleLogOut}>Log Out</button>
           </>
         ) : (

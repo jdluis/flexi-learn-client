@@ -44,7 +44,7 @@ function SearchCourses(props) {
       >
         <option value={""}>All categories</option>
         <option value="healthy">Healthy</option>
-        <option value="programming">Programming</option>
+        <option value="programing">Programming</option>
         <option value="marketing">Marketing</option>
         <option value="psychology">Psychology</option>
       </select>

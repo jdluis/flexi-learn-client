@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { addLecturesService } from "../../services/lectures.services";
 
 function AddLectures(props) {
-  const navigate = useNavigate();
-
+  const { id } = useParams();
+  console.log("ID EN ADD LECTURE: ", id)
   //Locals States
   const [title, setTitle] = useState("");
   const [video_url, setVideo_url] = useState("");
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState(0);
 
-  const {
-    handleCloseModal,
-    setLectures,
-    handleTotalDurationChange,
-    hanleLecturesChange,
-  } = props;
+  const { handleCloseModal, setLectures } = props;
 
   const hanleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -32,7 +28,7 @@ function AddLectures(props) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const newLecture = {
       title,
@@ -40,18 +36,27 @@ function AddLectures(props) {
       description,
       duration,
     };
+
+    //When the course need to be created
+
     setLectures((actualLectures) => {
       return [...actualLectures, newLecture];
     });
-    handleCloseModal()
+
+    //when the course need to be updated
     try {
+      const addLecture = await addLecturesService(newLecture, id);
+      console.log(addLecture)
+
+      handleCloseModal();
     } catch (err) {
+     // setError ("Sorry, we couldn't send this data, try to change the")
       console.log(err);
     }
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2 className="text-gray-800 border-b-2 text-xl font-bold">Lectures</h2>
       <div className="flex -mx-3">
         <div className="text-gray-400 w-full px-3 mb-12">
@@ -120,7 +125,7 @@ function AddLectures(props) {
       </div>
       <div className="flex -mx-3">
         <div className="w-full px-3 mb-5 flex gap-3">
-          <button onClick={handleSubmit} className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold">
+          <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold">
             Add
           </button>
           <button

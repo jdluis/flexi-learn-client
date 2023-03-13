@@ -11,6 +11,7 @@ import SignUp from "./pages/auth/SignUp.jsx";
 import "./index.css";
 import AddCourse from "./pages/Instructor/AddCourse.jsx";
 import EditCourse from "./pages/Instructor/EditCourse.jsx";
+import Profile from "./pages/Profile.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
 
       //Instructor routes
