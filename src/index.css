@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+}
+body {
+  background: linear-gradient(
+    to bottom,
+    #051937,
+    #003049,
+    #00454e,
+    #1a5a4b,
+    #4f6b47
+  );
+  color: white;
+}
+
+.text-shadow-black {
+  text-shadow: -2px 4px 8px rgba(101, 210, 118, 0.82);
+}
+
+.btn-back {
+  padding: 10px 20px;
+  border-radius: 15px;
+  background-color: rgb(243, 21, 21);
+  color: white;
+  font-weight: 700;
+}
+
+.btn-ok {
+  padding: 10px 20px;
+  border-radius: 15px;
+  background-color: rgb(0, 161, 89);
+  color: white;
+  font-weight: 700;
+}
+
+.btn:hover {
+  opacity: .6;
+}
+
+input[type="button"], button {
+  @apply cursor-pointer;
+}
+
+
+/* Provisional modal animation */
+.ReactModal__Overlay {
+  opacity: 0;
+  translate: 0 50%;
+  transition: all 2000ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+  translate: 0%;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+  translate: 0 50%;
+}
