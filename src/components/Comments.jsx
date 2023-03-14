@@ -64,7 +64,7 @@ function Comments(props) {
         <p>{lectureData.description}</p>
       </div>
       <div className="bg-stone-300 flex flex-col gap-3  text-black round-xl p-2 m-2">
-        {lectureData.testimonials.map((testimonial) => {
+        {lectureData.testimonials.reverse().map((testimonial) => {
           return (
             <div
               key={testimonial._id}
