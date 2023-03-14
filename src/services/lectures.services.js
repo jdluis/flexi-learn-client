@@ -13,8 +13,8 @@ const addLecturesService = (newCourse, idCourse) => {
   return service.post(`/courses/${idCourse}/lectures/add`, newCourse);
 };
 
-const editLecturesService = (newCourse, id) => {
-  return service.post(`/lectures/${id}/edit`, newCourse);
+const editLecturesService = (idLecture, newCourse) => {
+  return service.patch(`/lectures/${idLecture}/edit`, newCourse);
 };
 
 const deleteLectureService = (id) => {

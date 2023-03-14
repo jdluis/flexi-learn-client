@@ -1,7 +1,9 @@
 import { useEffect, useContext, useState } from "react";
+import IsStudent from "../components/IsStudent";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/auth.context";
 import {
+  editUserService,
   getInstructorService,
   getStudentService,
   getUserService,
@@ -15,11 +17,11 @@ function Profile() {
   const [student, setStudent] = useState(null);
 
   //User Model
-  const [profileImg_url, setProfileImg_url] = useState();
-  const [firstName, setFirstName] = useState();
-  const [last_name, setLast_name] = useState();
-  const [description, setDescription] = useState();
-  const [email, setEmail] = useState();
+  const [profileImg_url, setProfileImg_url] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [description, setDescription] = useState("");
+  const [email, setEmail] = useState("");
   const [topics, setTopics] = useState([]);
 
   const handleTopics = (e) => {
@@ -44,7 +46,7 @@ function Profile() {
     try {
       const userData = await getUserService(loggedUser._id);
       setProfileImg_url(userData.data.profileImg_url);
-      setFirstName(userData.data.firstName);
+      setFirstName(userData.data.first_name);
       setLast_name(userData.data.last_name);
       setDescription(userData.data.description);
       setEmail(userData.data.email);
@@ -66,16 +68,34 @@ function Profile() {
   const getStudent = async () => {
     try {
       const studentData = await getStudentService(loggedStudentId);
-      console.log(studentData);
-      setStudent(studentData);
+      console.log(studentData.data);
+      setStudent(studentData.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleDelete = () => {};
+  /*   const handleDelete = async () => {
+    try {
+      await 
+    } catch (error) {
+      console.log(error)
+    }
+  }; */
 
-  const handleUpdate = () => {};
+  const handleUpdate = async () => {
+    try {
+      await editUserService(user._id, {
+        email,
+        first_name,
+        last_name,
+        description,
+        profileImg_url,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (user === null) {
     return <Loading />;
@@ -97,7 +117,7 @@ function Profile() {
         <input
           onChange={handleFirstName}
           type="text"
-          value={firstName}
+          value={first_name}
           placeholder="First Name"
         />
         <input
@@ -116,9 +136,11 @@ function Profile() {
       <div>
         <h3 className="text-white">About Me</h3>
         <div>
-          <textarea onChange={handleDescription} type="text">
-            {description}
-          </textarea>
+          <textarea
+            value={description}
+            onChange={handleDescription}
+            type="text"
+          ></textarea>
           <input type="text" placeholder="Language" />
         </div>
         {student && (
@@ -141,13 +163,24 @@ function Profile() {
       </div>
       <div>
         <h3 className="text-white">My Courses</h3>
-        <div>
-          <h2>---</h2>
-        </div>
+        <IsStudent>
+          <div>
+            <ul>
+              {student &&
+                student.purchasedCourses.map((course) => {
+                  return (
+                    <li>
+                      {course.title}--{course.totalDuration} Minutes
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        </IsStudent>
       </div>
       <div className="text-white">
         <button onClick={handleUpdate}>Save</button>
-        <button onClick={handleDelete}>Delete</button>
+        {/* <button onClick={handleDelete}>Delete</button> */}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Link } from "react-router-dom";
 
 function CourseInfo(props) {
@@ -34,9 +34,15 @@ function CourseInfo(props) {
             {course.lectures &&
               course.lectures.map((lecture, index) => {
                 return (
-                  <li>
+                  <li key={lecture._id}>
                     {index}: {lecture.title}, duration: {lecture.duration}{" "}
-                    minutes <Link className="bg-green-300 text-black rounded-lg  p-1" to={`/courses/lecture/${lecture._id}`}>Watch</Link>
+                    minutes{" "}
+                    <Link
+                      className="bg-green-300 text-black rounded-lg  p-1"
+                      to={`/courses/lecture/${lecture._id}`}
+                    >
+                      Watch
+                    </Link>
                   </li>
                 );
               })}
