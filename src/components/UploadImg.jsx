@@ -5,7 +5,6 @@ import { useState } from "react";
 function UploadImg(props) {
     const {imageUrl, setImageUrl} = props
     const navigate = useNavigate();
-      //cloudinary
 
   const [isUploading, setIsUploading] = useState(false);
 

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function CoursePreview(props) {
-  const { course, loggedInstructorId } = props;
+  const { course, loggedInstructorId, loggedStudentId } = props;
 
   return (
     <div>
@@ -26,6 +26,9 @@ function CoursePreview(props) {
           </span>
           <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
             #{course.level}
+          </span>
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            #{course.totalDuration} min
           </span>
         </div>
       </Link>

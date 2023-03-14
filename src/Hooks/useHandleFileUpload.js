@@ -41,10 +41,12 @@ export { useHandleFileUpload };
 /*  Guia:
 
 - Crear el state:
-- Llamar al componente  
+  const [imageUrl, setImageUrl] = useState("");
+
+- Llamar al componente: 
 <UploadImg imageUrl={imageUrl} setImageUrl={setImageUrl} />
 En el body
-- Llamar a este hook y pasarle los parametros necesarios.
+
 - Poner el imageUrl en el objeto que vayamos a enviar a la base de datos
 ejm: image: imageUrl
 

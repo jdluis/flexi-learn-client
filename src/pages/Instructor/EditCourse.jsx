@@ -8,6 +8,7 @@ import {
 import AddLectures from "./AddLectures";
 import { deleteLectureService } from "../../services/lectures.services";
 import Modal from "react-modal";
+import UploadImg from "../../components/UploadImg";
 
 function EditCourse() {
   //Define parent root of Modal, for screen readers
@@ -24,7 +25,7 @@ function EditCourse() {
   const [price, setPrice] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
   const [lectures, setLectures] = useState([]);
-  const [coverImg_url, setCoverImg_url] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [isDeleted, setIsDeleted] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -51,10 +52,6 @@ function EditCourse() {
 
   const hanlePriceChange = (e) => {
     setPrice(e.target.value);
-  };
-
-  const handleCoverImgChange = (e) => {
-    setCoverImg_url(e.target.value);
   };
 
   //The result of the sum of each lecture
@@ -85,11 +82,11 @@ function EditCourse() {
       } = course.data;
       setTitle(title);
       setTopic(topic);
-      setTopic(level);
+      setLevel(level);
       setDescription(description);
-      setCoverImg_url(coverImg_url);
       setPrice(price);
       setLectures(lectures);
+      setImageUrl(coverImg_url)
     } catch (err) {
       console.log(err);
     }
@@ -116,7 +113,7 @@ function EditCourse() {
         description,
         price,
         totalDuration,
-        coverImg_url,
+        coverImg_url: imageUrl,
       };
       await editCoursesService(id, updatedData);
 
@@ -168,7 +165,7 @@ function EditCourse() {
                       <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
                     </div>
                     <select
-                      defaultValue={courseForEdit.topic}
+                      value={courseForEdit.topic}
                       onChange={handleTopicChange}
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                     >
@@ -191,7 +188,7 @@ function EditCourse() {
                       <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
                     </div>
                     <select
-                      defaultValue={courseForEdit.level}
+                      value={courseForEdit.level}
                       onChange={handleLevelChange}
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                     >
@@ -225,23 +222,7 @@ function EditCourse() {
                 </div>
               </div>
               <div className="flex -mx-3">
-                <div className="w-full px-3 mb-12">
-                  <label className="text-xs font-semibold px-1">
-                    Cover Img
-                  </label>
-                  <div className="flex">
-                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                      <i className="mdi mdi-lock-outline text-gray-400 text-lg"></i>
-                    </div>
-                    <input
-                      value={coverImg_url}
-                      onChange={handleCoverImgChange}
-                      type="text"
-                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="Cover Img"
-                    />
-                  </div>
-                </div>
+              <UploadImg imageUrl={imageUrl} setImageUrl={setImageUrl} />
               </div>
               <div className="flex -mx-3">
                 <div className="w-full px-3 mb-12">

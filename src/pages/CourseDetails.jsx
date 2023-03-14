@@ -7,6 +7,7 @@ import IsStudent from "../components/IsStudent";
 import UserInfo from "../components/UserInfo";
 import CourseInfo from "../components/CourseInfo";
 import Loading from "../components/Loading";
+import IsInstructor from "../components/IsInstructor";
 
 function CourseDetails() {
   const { courseId } = useParams();
@@ -32,7 +33,7 @@ function CourseDetails() {
       const responseInstructor = await getInstructorService(
         response.data.instructor._id
       );
-
+        console.log(response.data)
       setInstructorData(responseInstructor.data);
       setCourseCreator(responseInstructor.data.user_id);
       setCourseData(response.data);
@@ -63,14 +64,16 @@ function CourseDetails() {
         </button>
       </IsStudent>
 
-      {loggedInstructorId === courseData.instructor._id && (
-        <Link
-          to={`/courses/edit/${courseData._id}`}
-          className="btn p-2 bg-green-300 text-black"
-        >
-          Edit
-        </Link>
-      )}
+      <IsInstructor>
+        {loggedInstructorId === courseData.instructor._id && (
+          <Link
+            to={`/courses/edit/${courseData._id}`}
+            className="btn p-2 bg-green-300 text-black"
+          >
+            Edit
+          </Link>
+        )}
+      </IsInstructor>
     </div>
   );
 }
