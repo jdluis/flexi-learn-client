@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./routes/App.jsx";
-import Error from "./pages/errors/Error";
+import Error500 from "./pages/errors/Error500";
 import NotFound from "./pages/errors/NotFound";
 import Login from "./pages/auth//Login";
 import Home from "./pages/Home.jsx";
@@ -12,11 +12,13 @@ import "./index.css";
 import AddCourse from "./pages/Instructor/AddCourse.jsx";
 import EditCourse from "./pages/Instructor/EditCourse.jsx";
 import Profile from "./pages/Profile.jsx";
+import CourseDetails from "./pages/CourseDetails.jsx";
+import VideoPlataform from "./pages/Student/VideoPlataform.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <Error />,
+    errorElement: <Error500 />,
     children: [
       //Main routes
       {
@@ -35,6 +37,10 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
+      {
+        path: "/courses/details/:courseId",
+        element: <CourseDetails />,
+      },
 
       //Instructor routes
       {
@@ -45,7 +51,17 @@ const router = createBrowserRouter([
         path: "/courses/edit/:id",
         element: <EditCourse />,
       },
+
+      //Student routes
+      {
+        path: "/courses/lecture/:idLecture",
+        element: <VideoPlataform />,
+      },
       //Error routes
+      {
+        path: "/error",
+        element: <Error />,
+      },
       {
         path: "*",
         element: <NotFound />,

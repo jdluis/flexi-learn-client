@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 import { verifyService } from "../services/auth.services";
 
 const AuthContext = createContext();
@@ -55,8 +56,8 @@ function AuthWrapper(props) {
 
   if (isFetching === true) {
     return (
-      <div className="App">
-        <h2>...Validating Credencial</h2>
+      <div className="flex items-center justify-center h-screen">
+        <ClipLoader color="#36d7b7" size={200} cssOverride={{}} loading />
       </div>
     );
   }

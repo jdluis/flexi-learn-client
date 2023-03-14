@@ -30,11 +30,8 @@ function SignUp() {
       await signupService(newUser);
       navigate("/login");
     } catch (error) {
-      // console.log(error.response.status);
-      // console.log(error.response.data.errorMessage);
       if (error.response.status === 400) {
-        // mostramos al usuario como solventar el problema
-        setErrorMessage(error.response.data.errorMessage);
+        setErrorMessage("SometInputs should not be empty");
       } else {
         navigate("/error");
       }
@@ -42,7 +39,7 @@ function SignUp() {
   };
 
   return (
-    <div>
+    <div className="mt-20">
       <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden">
         <div className="md:flex w-full">
           <div className="w-full md:w-1/2 py-10 px-5 md:px-10">

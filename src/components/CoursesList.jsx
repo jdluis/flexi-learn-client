@@ -6,12 +6,14 @@ import {
 } from "../services/courses.services";
 import SearchCourses from "./SearchCourses";
 import { AuthContext } from "../context/auth.context";
+import CoursePreview from "./CoursePreview";
+import Loading from "./Loading";
 
 function CoursesList() {
   const navigate = useNavigate();
 
   //Global Context
-  const { isInstructor, isLoggedIn, loggedInstructorId } =
+  const { isInstructor, isLoggedIn, loggedStudentId, loggedInstructorId } =
     useContext(AuthContext);
 
   //Local States
@@ -63,7 +65,7 @@ function CoursesList() {
 
   //Guard Clause
   if (allCourses === null) {
-    return "Loading";
+    return <Loading/>;
   }
   return (
     <div className="flex flex-col gap-10 mb-5">
@@ -86,44 +88,11 @@ function CoursesList() {
               )
               .filter((course) => topic === "" || course.topic === topic)
               .map((course) => (
-                <div
+                <CoursePreview
                   key={course._id}
-                  className="max-w-sm rounded overflow-hidden shadow-lg"
-                >
-                  <div>
-                    <img
-                      className="w-full"
-                      src=""
-                      alt="Sunset in the mountains"
-                    />
-                  </div>
-
-                  <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{course.title}</div>
-                    <p className="text-gray-200 text-base">
-                      {course.description}
-                    </p>
-                  </div>
-                  <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                      <span>{course.price} $</span>
-                    </span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                      #{course.topic}
-                    </span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                      #{course.level}
-                    </span>
-                  </div>
-                  {loggedInstructorId === course.instructor._id && (
-                    <Link
-                      to={`/courses/edit/${course._id}`}
-                      className="btn p-2 bg-green-300 text-black"
-                    >
-                      Edit
-                    </Link>
-                  )}
-                </div>
+                  course={course}
+                  loggedInstructorId={loggedInstructorId}
+                />
               ))}
       </div>
       {isInstructor && (

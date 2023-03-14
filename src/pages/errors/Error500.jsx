@@ -2,7 +2,7 @@ import React from 'react'
 
 function Error500() {
   return (
-    <div>Error500</div>
+    <div className='mt-20'>Error500</div>
   )
 }
 

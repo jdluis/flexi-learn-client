@@ -12,7 +12,7 @@ function AddLectures(props) {
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState(0);
 
-  const { handleCloseModal, setLectures } = props;
+  const { handleCloseModal, setLectures, setIsFetching } = props;
 
   const hanleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -46,8 +46,9 @@ function AddLectures(props) {
     } else {
       //when the course need to be updated
       try {
-        const addLecture = await addLecturesService(newLecture, id);
-        console.log(addLecture);
+        setIsFetching(true);
+        await addLecturesService(newLecture, id);
+        setIsFetching(false);
       } catch (err) {
         // setError ("Sorry, we couldn't send this data, try to change the")
         console.log(err);

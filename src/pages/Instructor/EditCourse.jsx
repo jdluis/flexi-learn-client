@@ -26,6 +26,7 @@ function EditCourse() {
   const [lectures, setLectures] = useState([]);
   const [coverImg_url, setCoverImg_url] = useState("");
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
 
   const [courseForEdit, setCourseForEdit] = useState({});
 
@@ -51,9 +52,7 @@ function EditCourse() {
   const hanlePriceChange = (e) => {
     setPrice(e.target.value);
   };
-  /*  const hanleLecturesChange = (e) => {
-    setLectures(e.target.value);
-  }; */
+
   const handleCoverImgChange = (e) => {
     setCoverImg_url(e.target.value);
   };
@@ -68,7 +67,7 @@ function EditCourse() {
   useEffect(() => {
     getCourse();
     handleTotalDurationChange();
-  }, [lectures.length, isDeleted]);
+  }, [lectures.length, isDeleted, isFetching]);
 
   const getCourse = async () => {
     try {
@@ -328,6 +327,7 @@ function EditCourse() {
                 <AddLectures
                   setLectures={setLectures}
                   handleCloseModal={handleCloseModal}
+                  setIsFetching={setIsFetching}
                 />
               </Modal>
 
