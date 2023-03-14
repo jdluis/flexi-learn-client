@@ -74,8 +74,6 @@ function EditCourse() {
       const course = await oneCoursesService(id);
       setCourseForEdit(course.data);
 
-      console.log(course);
-
       const {
         title,
         topic,

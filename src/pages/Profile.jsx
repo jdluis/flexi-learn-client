@@ -1,13 +1,16 @@
 import { useEffect, useContext, useState } from "react";
 import IsStudent from "../components/IsStudent";
 import Loading from "../components/Loading";
+import UploadImg from "../components/UploadImg";
 import { AuthContext } from "../context/auth.context";
+
 import {
   editUserService,
   getInstructorService,
   getStudentService,
   getUserService,
 } from "../services/user.services";
+
 function Profile() {
   const { isInstructor, loggedUser, loggedInstructorId, loggedStudentId } =
     useContext(AuthContext);
@@ -17,12 +20,14 @@ function Profile() {
   const [student, setStudent] = useState(null);
 
   //User Model
-  const [profileImg_url, setProfileImg_url] = useState("");
+
   const [first_name, setFirstName] = useState("");
   const [last_name, setLast_name] = useState("");
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
   const [topics, setTopics] = useState([]);
+
+  const [imageUrl, setImageUrl] = useState(null);
 
   const handleTopics = (e) => {
     if (topics.includes(e.target.value)) {
@@ -31,7 +36,6 @@ function Profile() {
     }
   };
 
-  const handleImgUrl = (e) => setProfileImg_url(e.target.value);
   const handleFirstName = (e) => setFirstName(e.target.value);
   const handleLastName = (e) => setLast_name(e.target.value);
   const handleDescription = (e) => setDescription(e.target.value);
@@ -45,7 +49,7 @@ function Profile() {
   const getUser = async () => {
     try {
       const userData = await getUserService(loggedUser._id);
-      setProfileImg_url(userData.data.profileImg_url);
+      setImageUrl(userData.data.profileImg_url);
       setFirstName(userData.data.first_name);
       setLast_name(userData.data.last_name);
       setDescription(userData.data.description);
@@ -90,7 +94,7 @@ function Profile() {
         first_name,
         last_name,
         description,
-        profileImg_url,
+        profileImg_url: imageUrl,
       });
     } catch (error) {
       console.log(error);
@@ -103,15 +107,7 @@ function Profile() {
 
   return (
     <div className="mt-20 text-black flex flex-col gap-5">
-      <div>
-        <img src={user.profileImg_url} alt="profile photo" />
-        <input
-          onChange={handleImgUrl}
-          value={profileImg_url}
-          type="text"
-          placeholder="Change imgUrl"
-        />
-      </div>
+      <UploadImg imageUrl={imageUrl} setImageUrl={setImageUrl} />
       <div>
         <h3 className="text-white">Basics</h3>
         <input
