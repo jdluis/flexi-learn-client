@@ -45,7 +45,6 @@ function CoursesList() {
       }
       setAllCourses(allCoursesData.data);
       setRenderCourses(allCoursesData.data);
-      console.log(renderCourses);
     } catch (err) {
       console.log(err);
       navigate("/");

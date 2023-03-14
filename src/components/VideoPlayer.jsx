@@ -7,6 +7,7 @@ function VideoPlayer(props) {
   if (lectureData === null) {
     return <Loading />;
   }
+  
   return (
     <div className="mt-20 aspect-video">
       <ReactPlayer width={"350px"} controls={true} url={lectureData.video_url} />

@@ -36,8 +36,6 @@ function CourseDetails() {
       setInstructorData(responseInstructor.data);
       setCourseCreator(responseInstructor.data.user_id);
       setCourseData(response.data);
-      console.log(response.data);
-      console.log(responseInstructor.data);
       setIsFetching(false);
     } catch (error) {
       console.log(error);

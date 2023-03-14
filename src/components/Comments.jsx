@@ -55,8 +55,6 @@ function Comments(props) {
 
   if (lectureData === null) {
     return <Loading />;
-  } else {
-    console.log(lectureData);
   }
 
   return (
@@ -68,9 +66,12 @@ function Comments(props) {
       <div className="bg-stone-300 flex flex-col gap-3  text-black round-xl p-2 m-2">
         {lectureData.testimonials.map((testimonial) => {
           return (
-            <div className="flex items-start gap-2 rounded-3xl bg-slate-400 p-2">
-              <h4>Author: </h4>
-              <p>{testimonial.message}</p>
+            <div
+              key={testimonial._id}
+              className="flex flex-col items-start gap-2 rounded-3xl bg-slate-400 p-2"
+            >
+              <h4 className="font-bold">{testimonial.author.first_name} {testimonial.author.last_name} </h4>
+              <p className="pl-4">{testimonial.message}</p>
             </div>
           );
         })}

@@ -10,9 +10,11 @@ function VideoPlataform() {
   const [lecture, setLecture] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [needRender, setNeedRender] = useState(false);
+  
   useEffect(() => {
     getData();
   }, [needRender]);
+
   const getData = async () => {
     try {
       setIsFetching(true);

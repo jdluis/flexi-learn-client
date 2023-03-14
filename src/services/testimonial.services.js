@@ -1,7 +1,11 @@
 //All functions who contact backend for CRUD of Courses
 import service from "./config.services";
 
-const allTestimonialService = (idUser) => {
+const allTestimonialService = () => {
+  return service.get(`/testimonial`);
+};
+
+const authorTestimonialsService = (idUser) => {
   return service.get(`/testimonial/${idUser}`);
 };
 
@@ -17,4 +21,5 @@ export {
   allTestimonialService,
   addTestimonialService,
   deleteTestimonialService,
+  authorTestimonialsService,
 };
