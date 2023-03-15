@@ -30,7 +30,7 @@ function Login() {
         authenticateUser()
     } catch (error) {
         if (error.response.status === 400) {
-            // mostramos al usuario como solventar el problema
+            
             loginService(error.response.data.errorMessage)
           } else {
             console.log(error)

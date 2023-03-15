@@ -31,23 +31,33 @@ export default function Root() {
         {isLoggedIn ? (
           <>
             <li>
-              <NavLink to={`/`}>Home</NavLink>
+              <NavLink end={true} style={toggleStyles} to={`/`}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to={`/profile`}>Profile</NavLink>
+              <NavLink style={toggleStyles} to={`/profile`}>
+                Profile
+              </NavLink>
             </li>
             <button onClick={handleLogOut}>Log Out</button>
           </>
         ) : (
           <>
             <li>
-              <NavLink to={`/`}>Home</NavLink>
+              <NavLink style={toggleStyles} to={`/`}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to={`/login`}>Login</NavLink>
+              <NavLink style={toggleStyles} to={`/login`}>
+                Login
+              </NavLink>
             </li>
             <li>
-              <NavLink to={`/signup`}>SignUp</NavLink>
+              <NavLink style={toggleStyles} to={`/signup`}>
+                SignUp
+              </NavLink>
             </li>
           </>
         )}
