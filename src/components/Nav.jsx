@@ -21,9 +21,9 @@ export default function Root() {
   const handleLogOut = () => {
     localStorage.removeItem("authToken");
     authenticateUser();
-
     navigate("/");
   };
+
 
   return (
     <nav className="bg-slate-400 p-4 fixed w-full top-0">

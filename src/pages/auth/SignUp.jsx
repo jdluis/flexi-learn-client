@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../../services/auth.services";
+import { useValidateEmailAndPass } from "../../Hooks/useValidation";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -26,12 +28,24 @@ function SignUp() {
       password,
       type,
     };
+
+    //Validations:
+    useValidateEmailAndPass(email, password);
+
     try {
       await signupService(newUser);
       navigate("/login");
+      toast.success(
+        `Register Success,  👨‍🏫`,
+        { position: toast.POSITION.BOTTOM_CENTER }
+      );
+
     } catch (error) {
-      if (error.response.status === 400) {
-        setErrorMessage("SometInputs should not be empty");
+      if (error.response.status === 400 ) {
+        toast.error(
+          `${error.response.data.messageDeveloper},  👨‍🏫`,
+          { position: toast.POSITION.BOTTOM_CENTER }
+        );
       } else {
         navigate("/error");
       }

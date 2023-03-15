@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { verifyService } from "../services/auth.services";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
 function AuthWrapper(props) {
-  // nuestros estados de auth
+  // Our states of auth
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState(null);
   const [isInstructor, setIsInstructor] = useState(null);
@@ -13,15 +14,19 @@ function AuthWrapper(props) {
   const [loggedInstructorId, setIsLoggedInstructorId] = useState(null);
   const [loggedStudentId, setLoggedStudentId] = useState(null);
 
-  // nuestras funciones de auth
-
   // esta funcion que va a contactar al backend, para validar el Token
   const authenticateUser = async () => {
     setIsFetching(true);
     try {
       const response = await verifyService();
-      console.log("Token es valido");
 
+      //control of login notification
+      if (response.data.name === null) {
+        toast.success(`Welcome again ${response.data.name}`);
+      } else {
+        toast.success(`User Logged`);
+      }
+      
       if (response.data.instructor) {
         setIsLoggedInstructorId(response.data.instructor);
         setIsInstructor(true);
@@ -34,7 +39,7 @@ function AuthWrapper(props) {
       setLoggedUser(response.data);
       setIsFetching(false);
     } catch (error) {
-      console.log("Token invalido o no existe");
+      console.error("No logged user detected")
       setIsLoggedIn(false);
       setLoggedUser(null);
       setIsFetching(false);

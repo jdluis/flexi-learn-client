@@ -5,10 +5,12 @@ import {
   oneCoursesService,
   deleteCoursesService,
 } from "../../services/courses.services";
-import AddLectures from "./AddLectures";
+import AddLectures from "../../Models/AddLectures";
 import { deleteLectureService } from "../../services/lectures.services";
 import Modal from "react-modal";
 import UploadImg from "../../components/UploadImg";
+import { toast } from "react-toastify";
+
 
 function EditCourse() {
   //Define parent root of Modal, for screen readers
@@ -95,9 +97,11 @@ function EditCourse() {
   const handleDeleteLecture = async (idLecture) => {
     setIsDeleted(false);
     try {
-      await deleteLectureService(idLecture);
-
+     const lectureRemoved =  await deleteLectureService(idLecture);
       setIsDeleted(true);
+      toast.warn(`Lecture "${lectureRemoved.data.lecture.title}" has been removed,  👨‍🏫`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -140,6 +144,9 @@ function EditCourse() {
     try {
       await deleteCoursesService(id);
       navigate("/");
+      toast.warn(`Course "${courseForEdit.title}" has been removed,  👨‍🏫`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     } catch (err) {
       console.log(err);
     }
