@@ -54,7 +54,7 @@ function CourseInfo(props) {
   { 
     showPaymentIntent === false
     ? <button onClick={() => setShowPaymentIntent(true)}>Purchase</button> 
-    : <PaymentIntent productDetails={course._id}/> 
+    : <PaymentIntent productDetails={course}/> 
   }
 </div>
       </div>

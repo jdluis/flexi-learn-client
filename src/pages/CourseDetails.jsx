@@ -33,7 +33,6 @@ function CourseDetails() {
       const responseInstructor = await getInstructorService(
         response.data.instructor._id
       );
-        console.log(response.data)
       setInstructorData(responseInstructor.data);
       setCourseCreator(responseInstructor.data.user_id);
       setCourseData(response.data);

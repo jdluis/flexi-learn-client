@@ -62,7 +62,7 @@ function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${REACT_APP_CLIENT_URL}`
+        return_url: `${REACT_APP_CLIENT_URL}/payment-success`
       },
     });
 

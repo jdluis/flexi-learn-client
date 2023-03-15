@@ -16,6 +16,7 @@ console.log(REACT_APP_STRIPE_PUBLISHABLE_KEY)
 const stripePromise = loadStripe(REACT_APP_STRIPE_PUBLISHABLE_KEY); // Make sure you add your publishable API key to the .env.local
 
 function PaymentIntent({ productDetails }) {
+  console.log(productDetails)
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
