@@ -59,7 +59,6 @@ function CoursesList() {
     } else {
       setRenderCourses(allCourses);
     }
-    console.log(renderCourses);
   };
 
   //Guard Clause
