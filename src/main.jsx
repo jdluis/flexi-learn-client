@@ -7,6 +7,7 @@ import Login from "./pages/auth//Login";
 import Home from "./pages/Home.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthWrapper } from "./context/auth.context";
+import PaymentCompleted from "./pages/Payment/PaymentCompleted"
 import SignUp from "./pages/auth/SignUp.jsx";
 import "./index.css";
 import AddCourse from "./pages/Instructor/AddCourse.jsx";
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
       {
         path: "/courses/lecture/:idLecture",
         element: <VideoPlataform />,
+      },
+      //Payment routes
+      {
+        path: "/payment/completed",
+        element: <PaymentCompleted />,
       },
       //Error routes
       {

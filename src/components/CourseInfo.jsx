@@ -1,10 +1,13 @@
 
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import PaymentIntent from "./Payment/PaymentIntent";
 
 function CourseInfo(props) {
   const { course } = props;
+  const [showPaymentIntent, setShowPaymentIntent] = useState(false)
   return (
-    <div to={`/courses/details/${course._id}`}>
+    <div>
       <div className=" overflow-hidden shadow-lg">
         <div className="w-40">
           <img
@@ -47,6 +50,13 @@ function CourseInfo(props) {
               })}
           </ul>
         </div>
+        <div>
+  { 
+    showPaymentIntent === false
+    ? <button onClick={() => setShowPaymentIntent(true)}>Purchase</button> 
+    : <PaymentIntent productDetails={course._id}/> 
+  }
+</div>
       </div>
     </div>
   );
