@@ -4,13 +4,14 @@ import IsStudent from "../components/IsStudent";
 import Loading from "../components/Loading";
 import UploadImg from "../components/UploadImg";
 import { AuthContext } from "../context/auth.context";
-
+import moment from "moment";
 import {
   editUserService,
   getInstructorService,
   getStudentService,
   getUserService,
 } from "../services/user.services";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const { isInstructor, loggedUser, loggedInstructorId, loggedStudentId } =
@@ -26,8 +27,10 @@ function Profile() {
   const [last_name, setLast_name] = useState("");
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
+  const [language, setLanguage] = useState("");
   const [topics, setTopics] = useState([]);
 
+  const [isEditing, setIsEditing] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
 
   const handleTopics = (e) => {
@@ -36,7 +39,13 @@ function Profile() {
       setTopics([...topics, e.target.value]);
     }
   };
+  const handleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
 
+  const handleLanguage = (e) => {
+    setLanguage(e.target.value);
+  };
   const handleFirstName = (e) => setFirstName(e.target.value);
   const handleLastName = (e) => setLast_name(e.target.value);
   const handleDescription = (e) => setDescription(e.target.value);
@@ -89,6 +98,7 @@ function Profile() {
   }; */
 
   const handleUpdate = async () => {
+    handleIsEditing();
     try {
       await editUserService(user._id, {
         email,
@@ -107,76 +117,126 @@ function Profile() {
   }
 
   return (
-    <div className="mt-20 text-black flex flex-col gap-5">
-      <UploadImg imageUrl={imageUrl} setImageUrl={setImageUrl} />
+    <div className="mt-20 text-black flex flex-col gap-5  text-center justify-center w-full items-center">
+      <UploadImg
+        isEditing={isEditing}
+        imageUrl={imageUrl}
+        setImageUrl={setImageUrl}
+      />
+      <div>
+        <h2 className="font-bold text-slate-100">
+          {first_name} {last_name}
+        </h2>
+        <p className="text-slate-300">
+          Since: {moment(user.createdAt).format("DD MMM YYYY")}
+        </p>
+      </div>
       <div>
         <h3 className="text-white">Basics</h3>
-        <input
-          onChange={handleFirstName}
-          type="text"
-          value={first_name}
-          placeholder="First Name"
-        />
-        <input
-          onChange={handleLastName}
-          type="text"
-          value={last_name}
-          placeholder="Last Name"
-        />
-        <input
-          onChange={handleEmail}
-          type="text"
-          value={email}
-          placeholder="Email"
-        />
+        {!isEditing && (
+          <>
+            <p className="text-slate-300">{email}</p>
+            <p className="text-slate-300">Languages: {language ?? language}</p>
+          </>
+        )}
+        {isEditing && (
+          <>
+            <input
+              className=" appearance-none"
+              onChange={handleFirstName}
+              type="text"
+              value={first_name}
+              placeholder="First Name"
+            />
+            <input
+              className=" appearance-none"
+              onChange={handleLastName}
+              type="text"
+              value={last_name}
+              placeholder="Last Name"
+            />
+            <input
+              className=" appearance-none"
+              onChange={handleEmail}
+              type="text"
+              value={email}
+              placeholder="Email"
+            />{" "}
+          </>
+        )}
       </div>
       <div>
         <h3 className="text-white">About Me</h3>
-        <div>
-          <textarea
-            value={description}
-            onChange={handleDescription}
-            type="text"
-          ></textarea>
-          <input type="text" placeholder="Language" />
-        </div>
-        {student && (
-          <div className="mt-5">
-            <h4>Topics:</h4>
-            <div className="flex flex-wrap">
+        {!isEditing && <p className="text-slate-300">{description}</p>}
+        {isEditing && (
+          <>
+            <div>
+              <textarea
+                className=" appearance-none"
+                value={description}
+                onChange={handleDescription}
+                type="text"
+              ></textarea>
               <input
-                className=" rounded-l text-slate-700"
-                value={topics}
-                onChange={handleTopics}
-                placeholder={"programing, healthy, psychology, marketing"}
+                value={language}
+                onChange={handleLanguage}
+                type="text"
+                placeholder="Language"
               />
-              <p className="text-sm text-gray-500">
-                Write your topics with a comma between
-              </p>
             </div>
-          </div>
+            {student && (
+              <div className="mt-5">
+                <h4 className="text-white">Topics:</h4>
+                <div className="flex flex-col w-3/4 m-auto flex-wrap">
+                  <input
+                    className="appearance-none rounded-l text-slate-700"
+                    value={topics}
+                    onChange={handleTopics}
+                    placeholder={"programing, healthy, psychology, marketing"}
+                  />
+                  <p className="text-sm text-gray-500">
+                    Write your topics with a comma between
+                  </p>
+                </div>
+              </div>
+            )}
+          </>
         )}
-        <div></div>
       </div>
-      <div>
-        <h3 className="text-white">My Courses</h3>
-        <IsStudent>
-          <div>
-            <ul>
-              {student &&
-                student.purchasedCourses.map((course) => {
-                  return (
-                    <li>
-                      {course.title}--{course.totalDuration} Minutes
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-        </IsStudent>
-      </div>
+      {!isEditing && (
+        <div>
+          <h3 className="text-white">My Courses</h3>
+          <IsStudent>
+            <div>
+              {student && student.purchasedCourses.length === 0 && (
+                <p className="text-red-600">You dont have courses yet</p>
+              )}
+              <div>
+                {student &&
+                  student.purchasedCourses.map((course) => {
+                    return (
+                      <Link to={`/courses/details/${course._id}`} className="text-slate-300">
+                        {course.title} | {course.totalDuration} Minutes
+                      </Link>
+                    );
+                  })}
+              </div>
+            </div>
+          </IsStudent>
+        </div>
+      )}
       <div className="text-white">
-        <button onClick={handleUpdate}>Save</button>
+        {isEditing && (
+          <button className="btn-ok" onClick={handleUpdate}>
+            Save
+          </button>
+        )}
+        {!isEditing && (
+          <button className="btn-ok" onClick={handleIsEditing}>
+            Edit
+          </button>
+        )}
+
         {/* <button onClick={handleDelete}>Delete</button> */}
       </div>
     </div>

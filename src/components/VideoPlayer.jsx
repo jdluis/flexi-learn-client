@@ -9,8 +9,8 @@ function VideoPlayer(props) {
   }
   
   return (
-    <div className="mt-20 aspect-video">
-      <ReactPlayer width={"350px"} controls={true} url={lectureData.video_url} />
+    <div className="">
+      <ReactPlayer width="100%" height="280px"  controls={true} url={lectureData.video_url} />
     </div>
   );
 }
