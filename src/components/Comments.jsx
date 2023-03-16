@@ -8,6 +8,7 @@ import Loading from "./Loading";
 import { toast } from "react-toastify";
 import { IoMdSend } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
+import moment from 'moment';
 
 Modal.setAppElement("#root");
 
@@ -64,7 +65,7 @@ function Comments(props) {
 
   return (
     <div>
-      <div className="bg-stone-300 flex flex-col gap-3  text-black round-xl p-2 m-2">
+      <div className="flex flex-col gap-3  text-black round-xl px-2 m-2">
         {lectureData.testimonials
           .reverse()
           .slice(0, 5)
@@ -72,12 +73,23 @@ function Comments(props) {
             return (
               <div
                 key={testimonial._id}
-                className="flex flex-col items-start gap-2 rounded-3xl bg-slate-400 p-2"
+                className="flex flex-col items-start gap-2 border-gray-500 w-full  border-b py-2"
               >
-                <h4 className="font-bold">
-                  {testimonial.author.first_name} {testimonial.author.last_name}{" "}
-                </h4>
-                <p className="pl-4">{testimonial.message}</p>
+                <div className="flex">
+                  <div className="h-10 w-10">
+                    <img className="object-cover w-full h-full" src={testimonial.author.profileImg_url} alt="" />
+                  </div>
+                  <div className="flex flex-col pl-2">
+                    <h4 className="font-bold text-slate-300 text-sm">
+                      {testimonial.author.first_name}{" "}
+                      {testimonial.author.last_name}{" "}
+                    </h4>
+                    <p className="text-gray-500 text-sm">{moment(testimonial.createdAt).format('DD MMM YYYY')}</p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-slate-300 text-sm pl-4">{testimonial.message}</p>
+                </div>
               </div>
             );
           })}

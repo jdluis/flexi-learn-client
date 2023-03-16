@@ -96,7 +96,7 @@ function VideoPlataform() {
         <h2 className="text-xl"> {lecture.title}</h2>
         <p className="text-lg text-gray-500">{lecture.description}</p>
       </div>
-      <div className="flex justify-evenly py-2">
+      <div className="flex justify-evenly py-2 border-b border-zinc-500 pb-5">
         <button
           className="text-gray-400  font-bold"
           style={openClass ? activeStyles : inActiveStyles}
