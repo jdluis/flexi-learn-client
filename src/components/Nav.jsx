@@ -32,7 +32,7 @@ export default function Root() {
   };
 
   return (
-    <nav className="bg-primary text-slate-400 font-light p-4 fixed w-full bottom-0 h-14 lg:top-0">
+    <nav className="bg-primary text-slate-400 font-light p-4 fixed w-full bottom-0 h-14">
       <ul className="flex justify-evenly items-center">
         {isLoggedIn ? (
           <>

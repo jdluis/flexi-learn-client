@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 import {
   PaymentElement,
   LinkAuthenticationElement,
   useStripe,
-  useElements
+  useElements,
 } from "@stripe/react-stripe-js";
 
-function CheckoutForm() {
+function CheckoutForm(props) {
+  Modal.setAppElement("#root");
+
+  const { showModal, handleCloseModal, productDetails } = props;
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,7 +66,7 @@ function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${REACT_APP_CLIENT_URL}/payment-success`
+        return_url: `${REACT_APP_CLIENT_URL}/payment-success`,
       },
     });
 
@@ -81,24 +85,30 @@ function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: "tabs"
-  }
+    layout: "tabs",
+  };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      {/* <LinkAuthenticationElement
+    <Modal contentLabel="modal" isOpen={showModal}>
+      <form className="mb-10" id="payment-form" onSubmit={handleSubmit}>
+        {/* <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(e) => setEmail(e.target.value)}
       /> */}
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
-      </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
-    </form>
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+        <button className="text-white font-bold p-2 active:opacity-70 hover:opacity-70   border-2 w-full bg-green-500" disabled={isLoading || !stripe || !elements} id="submit">
+          <span id="button-text">
+            {isLoading ? (
+              <div className="spinner" id="spinner"></div>
+            ) : (
+              <button>Pay now</button>
+            )}
+          </span>
+        </button>
+        {/* Show any error or success messages */}
+        {message && <div id="payment-message">{message}</div>}
+      </form>
+    </Modal>
   );
 }
 

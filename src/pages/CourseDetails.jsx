@@ -10,7 +10,6 @@ import Loading from "../components/Loading";
 import IsInstructor from "../components/IsInstructor";
 import { toast } from "react-toastify";
 
-
 function CourseDetails() {
   const { courseId } = useParams();
 
@@ -40,7 +39,7 @@ function CourseDetails() {
       setCourseData(response.data);
       setIsFetching(false);
     } catch (error) {
-      toast.error(error.response.data.errorMessage);;
+      toast.error(error.response.data.errorMessage);
     }
   };
 
@@ -53,17 +52,14 @@ function CourseDetails() {
   }
 
   return (
-    <div className="mt-20">
-      <UserInfo user={courseCreator} />
-      <CourseInfo course={courseData} />
-      <IsStudent>
-        <button
-          onClick={handleAddToCart}
-          className="btn p-2 bg-green-300 text-black"
-        >
-          Add to Cart
-        </button>
-      </IsStudent>
+    <div>
+      <div
+        className="bg-opacity-50"
+        style={{ backgroundImage: `url(${courseData.coverImg_url})` }}
+      >
+        <UserInfo user={courseCreator} />
+      </div>
+      <CourseInfo handleAddToCart={handleAddToCart} course={courseData} />
 
       <IsInstructor>
         {loggedInstructorId === courseData.instructor._id && (

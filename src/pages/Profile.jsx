@@ -131,7 +131,7 @@ function Profile() {
           Since: {moment(user.createdAt).format("DD MMM YYYY")}
         </p>
       </div>
-      <div>
+      <div className="flex flex-col">
         <h3 className="text-white">Basics</h3>
         {!isEditing && (
           <>
@@ -165,12 +165,12 @@ function Profile() {
           </>
         )}
       </div>
-      <div>
+      <div >
         <h3 className="text-white">About Me</h3>
         {!isEditing && <p className="text-slate-300">{description}</p>}
         {isEditing && (
           <>
-            <div>
+            <div className="flex flex-col">
               <textarea
                 className=" appearance-none"
                 value={description}
@@ -185,9 +185,9 @@ function Profile() {
               />
             </div>
             {student && (
-              <div className="mt-5">
+              <div className="mt-5 ">
                 <h4 className="text-white">Topics:</h4>
-                <div className="flex flex-col w-3/4 m-auto flex-wrap">
+                <div className="flex flex-col m-auto flex-wrap">
                   <input
                     className="appearance-none rounded-l text-slate-700"
                     value={topics}
