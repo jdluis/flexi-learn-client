@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         primary: "#03091e",
         secondary: "#265e4a",
+        terciary: "#121f3d",
       },
       cursor: {
         pointer: "pointer",

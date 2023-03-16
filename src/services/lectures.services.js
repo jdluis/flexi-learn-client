@@ -9,6 +9,10 @@ const oneLectureService = (id) => {
   return service.get(`/lectures/${id}`);
 };
 
+const getCourseByLectureService = (byIdLecture) => {
+  return service.get(`/lectures/course/${byIdLecture}`);
+}; 
+
 const addLecturesService = (newCourse, idCourse) => {
   return service.post(`/courses/${idCourse}/lectures/add`, newCourse);
 };
@@ -34,4 +38,5 @@ export {
   allMyLecturesService,
   editLecturesService,
   deleteLectureService,
+  getCourseByLectureService
 };

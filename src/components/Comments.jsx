@@ -10,7 +10,7 @@ Modal.setAppElement("#root");
 
 function Comments(props) {
   const { idLecture } = useParams();
-  const { lectureData, setNeedRender, needRender } = props;
+  const { lectureData,getLectureData, setNeedRender, needRender } = props;
 
   //Global Context
   const { loggedUser } = useContext(AuthContext);
@@ -48,6 +48,7 @@ function Comments(props) {
       });
 
       setAddingTestimonial(false);
+      getLectureData()
       toast.success(`Comment added: "${message}"`);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
@@ -60,10 +61,6 @@ function Comments(props) {
 
   return (
     <div>
-      <div>
-        <h3>{lectureData.title}</h3>
-        <p>{lectureData.description}</p>
-      </div>
       <div className="bg-stone-300 flex flex-col gap-3  text-black round-xl p-2 m-2">
         {lectureData.testimonials.reverse().slice(0,5).map((testimonial) => {
           return (

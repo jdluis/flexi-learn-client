@@ -1,7 +1,7 @@
 function UserInfo(props) {
-    const {user} = props
+  const { user } = props;
   return (
-    <div>
+    <div className="flex">
       <div className="w-40">
         <img
           className="w-full object-cover"
@@ -9,10 +9,12 @@ function UserInfo(props) {
           alt={`profile image of ${user.first_name}`}
         />
       </div>
-      <h3>
-        Instructor: {user.first_name} {user.last_name}
-      </h3>
-      <p>Description: {user.description}</p>
+      <div>
+        <h3>
+          Instructor: {user.first_name} {user.last_name}
+        </h3>
+        <p>Description: {user.description}</p>
+      </div>
     </div>
   );
 }

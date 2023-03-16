@@ -12,6 +12,7 @@ export default function Root() {
   const { authenticateUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AuthContext);
+
   const toggleStyles = (navInfo) => {
     return navInfo.isActive === true ? activeStyles : inActiveStyles;
   };
@@ -23,6 +24,7 @@ export default function Root() {
   const inActiveStyles = {
     textDecoration: "none",
   };
+  
   const handleLogOut = () => {
     localStorage.removeItem("authToken");
     authenticateUser();
