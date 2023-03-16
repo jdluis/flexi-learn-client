@@ -6,11 +6,14 @@ import { useParams } from "react-router-dom";
 import { editLecturesService } from "../services/lectures.services";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
+import { IoMdSend } from "react-icons/io";
+import { AiOutlineClose } from "react-icons/ai";
+
 Modal.setAppElement("#root");
 
 function Comments(props) {
   const { idLecture } = useParams();
-  const { lectureData,getLectureData, setNeedRender, needRender } = props;
+  const { lectureData, getLectureData, setNeedRender, needRender } = props;
 
   //Global Context
   const { loggedUser } = useContext(AuthContext);
@@ -48,7 +51,7 @@ function Comments(props) {
       });
 
       setAddingTestimonial(false);
-      getLectureData()
+      getLectureData();
       toast.success(`Comment added: "${message}"`);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
@@ -62,45 +65,49 @@ function Comments(props) {
   return (
     <div>
       <div className="bg-stone-300 flex flex-col gap-3  text-black round-xl p-2 m-2">
-        {lectureData.testimonials.reverse().slice(0,5).map((testimonial) => {
-          return (
-            <div
-              key={testimonial._id}
-              className="flex flex-col items-start gap-2 rounded-3xl bg-slate-400 p-2"
-            >
-              <h4 className="font-bold">
-                {testimonial.author.first_name} {testimonial.author.last_name}{" "}
-              </h4>
-              <p className="pl-4">{testimonial.message}</p>
-            </div>
-          );
-        })}
+        {lectureData.testimonials
+          .reverse()
+          .slice(0, 5)
+          .map((testimonial) => {
+            return (
+              <div
+                key={testimonial._id}
+                className="flex flex-col items-start gap-2 rounded-3xl bg-slate-400 p-2"
+              >
+                <h4 className="font-bold">
+                  {testimonial.author.first_name} {testimonial.author.last_name}{" "}
+                </h4>
+                <p className="pl-4">{testimonial.message}</p>
+              </div>
+            );
+          })}
       </div>
-      <button className="fixed bottom-20 right-10 btn-ok mt-10" onClick={handleOpenModal}>
+      <button
+        className="fixed bottom-20 right-10 btn-ok mt-10"
+        onClick={handleOpenModal}
+      >
         Add Comment
       </button>
       <Modal
-        overlayClassName={"fixed bottom-0 bg-red-400 m-0 p-0  w-full"}
+        overlayClassName={"fixed bottom-14 bg-primary m-0  w-full"}
         className={"relative"}
-        closeTimeoutMS={200}
+        closeTimeoutMS={1000}
         contentLabel="modal"
         isOpen={showModal}
       >
-        <div className="text-black flex flex-col">
+        <div className="text-black flex justify-evenly mx-4 items-center">
+          <button className="text-gray-400 text-xl" onClick={handleCloseModal}>
+            <AiOutlineClose />
+          </button>
           <textarea
             placeholder="You like this course?"
-            className="bg-gray-200 p-2 border-2 border-zinc-700"
+            className="pt-2 caret-lime-600 outline-none bg-transparent text-gray-500 h-auto px-2 w-full "
             value={message}
             onChange={handleMessage}
           ></textarea>
-          <div className="flex justify-evenly">
-            <button className="btn-back " onClick={handleCloseModal}>
-              Cancel
-            </button>
-            <button className="btn-ok" onClick={handleAddComment}>
-              Add
-            </button>
-          </div>
+          <button className="text-gray-400 text-xl" onClick={handleAddComment}>
+            <IoMdSend />
+          </button>
         </div>
       </Modal>
     </div>
