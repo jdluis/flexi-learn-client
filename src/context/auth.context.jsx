@@ -39,7 +39,7 @@ function AuthWrapper(props) {
       setLoggedUser(response.data);
       setIsFetching(false);
     } catch (error) {
-      toast.error(error.response.data.errorMessage);
+      //toast.error(error.response.data.errorMessage);
       setIsInstructor(false);
       setIsLoggedIn(false);
       setLoggedUser(null);
