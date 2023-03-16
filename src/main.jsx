@@ -14,6 +14,7 @@ import EditCourse from "./pages/Instructor/EditCourse.jsx";
 import Profile from "./pages/Profile.jsx";
 import CourseDetails from "./pages/CourseDetails.jsx";
 import VideoPlataform from "./pages/Student/VideoPlataform.jsx";
+import NoteList from "./pages/Student/NoteList.jsx";
 import PaymentSuccess from "./pages/Payment/PaymentSuccess"
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/courses/lecture/:idLecture",
         element: <VideoPlataform />,
+      },
+      {
+        path: "/notes",
+        element: <NoteList />,
       },
       //Payment routes
       {

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../../services/auth.services";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [type, setType] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const hanleTypeChange = (e) => {
     setType(e.target.value);
@@ -26,12 +26,21 @@ function SignUp() {
       password,
       type,
     };
+
     try {
       await signupService(newUser);
       navigate("/login");
+      toast.success(
+        `Register Success,  👨‍🏫`,
+        { position: toast.POSITION.BOTTOM_CENTER }
+      );
+
     } catch (error) {
-      if (error.response.status === 400) {
-        setErrorMessage("SometInputs should not be empty");
+      if (error.response.status === 400 ) {
+        toast.error(
+          `${error.response.data.messageDeveloper},  👨‍🏫`,
+          { position: toast.POSITION.BOTTOM_CENTER }
+        );
       } else {
         navigate("/error");
       }

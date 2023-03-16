@@ -5,10 +5,12 @@ import {
   oneCoursesService,
   deleteCoursesService,
 } from "../../services/courses.services";
-import AddLectures from "./AddLectures";
+import AddLectures from "../../Models/AddLectures";
 import { deleteLectureService } from "../../services/lectures.services";
 import Modal from "react-modal";
 import UploadImg from "../../components/UploadImg";
+import { toast } from "react-toastify";
+
 
 function EditCourse() {
   //Define parent root of Modal, for screen readers
@@ -87,19 +89,21 @@ function EditCourse() {
       setPrice(price);
       setLectures(lectures);
       setImageUrl(coverImg_url)
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);;
     }
   };
 
   const handleDeleteLecture = async (idLecture) => {
     setIsDeleted(false);
     try {
-      await deleteLectureService(idLecture);
-
+     const lectureRemoved =  await deleteLectureService(idLecture);
       setIsDeleted(true);
-    } catch (err) {
-      console.log(err);
+      toast.warn(`Lecture "${lectureRemoved.data.lecture.title}" has been removed,  👨‍🏫`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);;
     }
   };
 
@@ -140,8 +144,11 @@ function EditCourse() {
     try {
       await deleteCoursesService(id);
       navigate("/");
-    } catch (err) {
-      console.log(err);
+      toast.warn(`Course "${courseForEdit.title}" has been removed,  👨‍🏫`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);;
     }
   };
 

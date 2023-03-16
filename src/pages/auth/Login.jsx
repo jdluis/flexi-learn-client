@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../../services/auth.services";
-
+import { toast } from "react-toastify";
 import { AuthContext } from "../../context/auth.context";
 
 function Login() {
-  const { authenticateUser} = useContext(AuthContext);
+  const { authenticateUser, loggedUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -16,29 +16,31 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // ... login logic here
+
     const user = {
-        email,
-        password,
-    }
+      email,
+      password,
+    };
     try {
-        const response = await loginService(user)
-        navigate('/')
+      const response = await loginService(user);
+     
+      navigate("/");
+      localStorage.setItem("authToken", response.data.authToken);
+      authenticateUser();
+      console.log(loggedUser)
+      /* toast.success(`Welcome again ${loggedUser}`); */
 
-        localStorage.setItem("authToken", response.data.authToken)
-
-        authenticateUser()
     } catch (error) {
-        if (error.response.status === 400) {
-            
-            loginService(error.response.data.errorMessage)
-          } else {
-            console.log(error)
-          }
+      console.log(error.response)
+      if (error.response.status === 400) {
+        toast.error(`${error.response.data.errorMessage}: 👨‍🏫`);
+      } else {
+        toast.error(`Ups! Damm it..👨🏻‍💻 ${error.response.data.errorMessage}`);
+      }
     }
   };
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div className="h-screen py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transhtmlForm -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
@@ -49,10 +51,13 @@ function Login() {
               </h1>
             </div>
             <div className="divide-y divide-gray-200">
-              <form onSubmit={handleLogin} className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+              <form
+                onSubmit={handleLogin}
+                className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
+              >
                 <div className="relative">
                   <input
-                  onChange={handleEmailChange}
+                    onChange={handleEmailChange}
                     autoComplete="off"
                     id="email"
                     name="email"
@@ -69,7 +74,7 @@ function Login() {
                 </div>
                 <div className="relative">
                   <input
-                  onChange={handlePasswordChange}
+                    onChange={handlePasswordChange}
                     autoComplete="off"
                     id="password"
                     name="password"

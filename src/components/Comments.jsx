@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth.context";
 import { useParams } from "react-router-dom";
 import { editLecturesService } from "../services/lectures.services";
 import Loading from "./Loading";
-
+import { toast } from "react-toastify";
 Modal.setAppElement("#root");
 
 function Comments(props) {
@@ -48,8 +48,9 @@ function Comments(props) {
       });
 
       setAddingTestimonial(false);
+      toast.success(`Comment added: "${message}"`);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.errorMessage);
     }
   };
 
@@ -64,20 +65,22 @@ function Comments(props) {
         <p>{lectureData.description}</p>
       </div>
       <div className="bg-stone-300 flex flex-col gap-3  text-black round-xl p-2 m-2">
-        {lectureData.testimonials.reverse().map((testimonial) => {
+        {lectureData.testimonials.reverse().slice(0,5).map((testimonial) => {
           return (
             <div
               key={testimonial._id}
               className="flex flex-col items-start gap-2 rounded-3xl bg-slate-400 p-2"
             >
-              <h4 className="font-bold">{testimonial.author.first_name} {testimonial.author.last_name} </h4>
+              <h4 className="font-bold">
+                {testimonial.author.first_name} {testimonial.author.last_name}{" "}
+              </h4>
               <p className="pl-4">{testimonial.message}</p>
             </div>
           );
         })}
       </div>
-      <button className="btn-ok mt-10 w-full" onClick={handleOpenModal}>
-        Add
+      <button className="fixed bottom-20 right-10 btn-ok mt-10" onClick={handleOpenModal}>
+        Add Comment
       </button>
       <Modal
         overlayClassName={"fixed bottom-0 bg-red-400 m-0 p-0  w-full"}
@@ -98,7 +101,7 @@ function Comments(props) {
               Cancel
             </button>
             <button className="btn-ok" onClick={handleAddComment}>
-              Add Comment
+              Add
             </button>
           </div>
         </div>

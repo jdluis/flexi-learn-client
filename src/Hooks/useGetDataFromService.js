@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function useGetDataFromService(service) {
   const navigate = useNavigate();
@@ -17,11 +18,11 @@ function useGetDataFromService(service) {
       setData(data);
 
       setLoading(false);
-    } catch (err) {
+    } catch (error) {
       if (error.name === "AbortError") {
-        console.log("Request Cancelled");
+        toast.error(error.response.data.errorMessage);
       }
-      setError("Somethinq is wrong: ", err);
+      setError("Somethinq is wrong: ", error);
       navigate("/");
     }
   }, []);

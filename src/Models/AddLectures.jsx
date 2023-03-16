@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { addLecturesService } from "../../services/lectures.services";
+import { addLecturesService } from "../services/lectures.services.js";
+import { toast } from "react-toastify";
 
 function AddLectures(props) {
   const currentPath = useLocation();
@@ -38,6 +39,13 @@ function AddLectures(props) {
       duration,
     };
 
+    if (!video_url || !title || !duration) {
+      toast.error(`The fields must be filled,  👨‍🏫`, {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      return;
+    }
+
     //When the course need to be created
     if (currentPath.pathname === "/courses/add") {
       setLectures((actualLectures) => {
@@ -47,11 +55,14 @@ function AddLectures(props) {
       //when the course need to be updated
       try {
         setIsFetching(true);
-        await addLecturesService(newLecture, id);
+        const courseAndLectureData = await addLecturesService(newLecture, id);
         setIsFetching(false);
-      } catch (err) {
-        // setError ("Sorry, we couldn't send this data, try to change the")
-        console.log(err);
+        console.log(courseAndLectureData)
+        toast.success(`"${courseAndLectureData.data.lecture.title}" lecture has been add to "${courseAndLectureData.data.course.title}",  👨‍🏫`, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      } catch (error) {
+        toast.error(error.response.data.errorMessage);
       }
     }
     handleCloseModal();

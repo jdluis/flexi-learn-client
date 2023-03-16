@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { addCoursesService } from "../../services/courses.services";
-import AddLectures from "./AddLectures";
+import AddLectures from "../../Models/AddLectures";
 
 import Modal from "react-modal";
 import { addLecturesService } from "../../services/lectures.services";
 import { useHandleFileUpload } from "../../Hooks/useHandleFileUpload";
 import UploadImg from "../../components/UploadImg";
+import { toast } from "react-toastify";
+
 //Define parent root of Modal, for screen readers
 Modal.setAppElement("#root");
 
@@ -83,9 +85,16 @@ function AddCourse() {
       });
 
       navigate("/");
+
+      toast.info(
+        `The course '${newCourse.data.title}', has been created:  👨‍🏫`,
+        { position: toast.POSITION.BOTTOM_CENTER }
+      );
     } catch (error) {
       if (error.response.status === 400) {
-        setErrorMessage(error.response.data.errorMessage);
+        toast.error(`${error.response.data.messageDeveloper},  👨‍🏫`, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       } else {
         navigate("/error");
       }
