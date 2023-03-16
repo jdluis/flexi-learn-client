@@ -30,13 +30,28 @@ function SignUp() {
     try {
       await signupService(newUser);
       navigate("/login");
-      toast.success(`Register Success,  👨‍🏫`, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
+      toast.success(
+        `Register Success,  👨‍🏫`,
+        { position: toast.POSITION.BOTTOM_CENTER }
+      );
+
     } catch (error) {
-      toast.error(`${error.response.data.messageDeveloper},  👨‍🏫`, {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
+      if (error.response.status === 400 ) {
+        toast.error(
+          `${error.response.data.messageDeveloper},  👨‍🏫`,
+          { position: toast.POSITION.BOTTOM_CENTER }
+        );
+      } else if (error.response.status === 500 ) {
+        toast.error(
+          `${error.response.data.errorMessage},  👨‍🏫`,
+          { position: toast.POSITION.BOTTOM_CENTER }
+        );
+      } else {
+        toast.error(
+          `${error.response.data.errorMessage},  👨‍🏫`,
+          { position: toast.POSITION.BOTTOM_CENTER }
+        );
+      }
     }
   };
 
