@@ -8,6 +8,7 @@ import SearchCourses from "./SearchCourses";
 import { AuthContext } from "../context/auth.context";
 import CoursePreview from "./CoursePreview";
 import Loading from "./Loading";
+import { toast } from "react-toastify";
 
 function CoursesList() {
   const navigate = useNavigate();
@@ -45,8 +46,8 @@ function CoursesList() {
       }
       setAllCourses(allCoursesData.data);
       setRenderCourses(allCoursesData.data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
       navigate("/");
     }
   };
@@ -77,7 +78,7 @@ function CoursesList() {
         setIsMyCourses={setIsMyCourses}
       />
 
-      <div className="flex justify-evenly flex-wrap">
+      <div className="flex justify-center items-top gap-y-10 gap-x-3 flex-wrap">
         {renderCourses.length === 0
           ? "No hay datos"
           : renderCourses
