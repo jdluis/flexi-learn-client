@@ -9,9 +9,11 @@ function Home() {
           <span className="relative text-lime-500 shadow-md top-8">Learn</span>
         </h1>
         <p className="text-slate-400">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-          quisquam consequatur illo assumenda consectetur ab harum error,
-          blanditiis magnam inventore!
+          "Flexi Learn: La plataforma en línea que te permite aprender de forma
+          flexible y personalizada con cursos impartidos por expertos en
+          diferentes áreas, desde la comodidad de tu hogar y a tu propio ritmo,
+          para que puedas alcanzar tus metas y seguir creciendo personal y
+          profesionalmente."
         </p>
       </div>
       <CoursesList />

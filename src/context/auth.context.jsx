@@ -39,7 +39,8 @@ function AuthWrapper(props) {
       setLoggedUser(response.data);
       setIsFetching(false);
     } catch (error) {
-      console.error("No logged user detected")
+      toast.error(error.response.data.errorMessage);
+      setIsInstructor(false);
       setIsLoggedIn(false);
       setLoggedUser(null);
       setIsFetching(false);

@@ -89,8 +89,8 @@ function EditCourse() {
       setPrice(price);
       setLectures(lectures);
       setImageUrl(coverImg_url)
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);;
     }
   };
 
@@ -102,8 +102,8 @@ function EditCourse() {
       toast.warn(`Lecture "${lectureRemoved.data.lecture.title}" has been removed,  👨‍🏫`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);;
     }
   };
 
@@ -147,8 +147,8 @@ function EditCourse() {
       toast.warn(`Course "${courseForEdit.title}" has been removed,  👨‍🏫`, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);;
     }
   };
 

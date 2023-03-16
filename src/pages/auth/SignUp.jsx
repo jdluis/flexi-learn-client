@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupService } from "../../services/auth.services";
-import { useValidateEmailAndPass } from "../../Hooks/useValidation";
 import { toast } from "react-toastify";
 
 function SignUp() {
@@ -9,7 +8,6 @@ function SignUp() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [type, setType] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const hanleTypeChange = (e) => {
     setType(e.target.value);
@@ -28,9 +26,6 @@ function SignUp() {
       password,
       type,
     };
-
-    //Validations:
-    useValidateEmailAndPass(email, password);
 
     try {
       await signupService(newUser);

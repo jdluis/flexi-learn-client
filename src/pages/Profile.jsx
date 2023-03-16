@@ -1,4 +1,5 @@
 import { useEffect, useContext, useState } from "react";
+import { toast } from "react-toastify";
 import IsStudent from "../components/IsStudent";
 import Loading from "../components/Loading";
 import UploadImg from "../components/UploadImg";
@@ -55,8 +56,8 @@ function Profile() {
       setDescription(userData.data.description);
       setEmail(userData.data.email);
       setUser(userData.data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
     }
   };
 
@@ -65,8 +66,8 @@ function Profile() {
       const insructorData = await getInstructorService(loggedInstructorId);
       console.log(insructorData);
       setInstructor(insructorData);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
     }
   };
   const getStudent = async () => {
@@ -74,8 +75,8 @@ function Profile() {
       const studentData = await getStudentService(loggedStudentId);
       console.log(studentData.data);
       setStudent(studentData.data);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
     }
   };
 
@@ -83,7 +84,7 @@ function Profile() {
     try {
       await 
     } catch (error) {
-      console.log(error)
+      toast.error(error.response.data.errorMessage);
     }
   }; */
 
@@ -97,7 +98,7 @@ function Profile() {
         profileImg_url: imageUrl,
       });
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.errorMessage);
     }
   };
 

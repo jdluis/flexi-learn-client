@@ -11,6 +11,7 @@ function App() {
       <Nav />
       <BackBtn />
       <Outlet />
+      <div className={"h-12"}></div>
     </div>
   );
 }

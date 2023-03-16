@@ -8,6 +8,8 @@ import UserInfo from "../components/UserInfo";
 import CourseInfo from "../components/CourseInfo";
 import Loading from "../components/Loading";
 import IsInstructor from "../components/IsInstructor";
+import { toast } from "react-toastify";
+
 
 function CourseDetails() {
   const { courseId } = useParams();
@@ -38,7 +40,7 @@ function CourseDetails() {
       setCourseData(response.data);
       setIsFetching(false);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.errorMessage);;
     }
   };
 

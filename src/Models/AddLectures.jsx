@@ -61,8 +61,8 @@ function AddLectures(props) {
         toast.success(`"${courseAndLectureData.data.lecture.title}" lecture has been add to "${courseAndLectureData.data.course.title}",  👨‍🏫`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        toast.error(error.response.data.errorMessage);
       }
     }
     handleCloseModal();
