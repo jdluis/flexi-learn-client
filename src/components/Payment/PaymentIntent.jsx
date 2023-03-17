@@ -46,6 +46,7 @@ function PaymentIntent(props) {
           <CheckoutForm
             showModal={showModal}
             handleCloseModal={handleCloseModal}
+            productDetails={productDetails}
           />
         </Elements>
       )}

@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Modal from "react-modal";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../context/auth.context";
+
 import {
   PaymentElement,
   LinkAuthenticationElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { removeProductFromCartServices } from "../../services/student.services.js";
+import BackBtn from "../BackBtn";
 
 function CheckoutForm(props) {
   Modal.setAppElement("#root");
+
+  //Global Context
+  const { loggedInstructorId, loggedStudentId, loggedUser } =
+    useContext(AuthContext);
 
   const { showModal, handleCloseModal, productDetails } = props;
   const stripe = useStripe();
@@ -19,6 +28,15 @@ function CheckoutForm(props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const REACT_APP_CLIENT_URL = import.meta.env.VITE_REACT_APP_CLIENT_URL;
+
+  const removeProductFromCart = async () => {
+    try {
+      console.log("Aquiiii intento eliminar")
+      await removeProductFromCartServices(loggedStudentId, productDetails._id);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
+    }
+  };
 
   useEffect(() => {
     if (!stripe) {
@@ -70,6 +88,9 @@ function CheckoutForm(props) {
       },
     });
 
+    //Remove product from the cart
+    removeProductFromCart(); //No se esta ejecutando...
+
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
@@ -90,13 +111,18 @@ function CheckoutForm(props) {
 
   return (
     <Modal contentLabel="modal" isOpen={showModal}>
+    <button className="text-black text-2xl relative bottom-3" onClick={handleCloseModal}>X</button>
       <form className="mb-10" id="payment-form" onSubmit={handleSubmit}>
         {/* <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(e) => setEmail(e.target.value)}
       /> */}
         <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <button className="text-white font-bold p-2 active:opacity-70 hover:opacity-70   border-2 w-full bg-green-500" disabled={isLoading || !stripe || !elements} id="submit">
+        <button
+          className="text-white font-bold p-2 active:opacity-70 hover:opacity-70   border-2 w-full bg-green-500"
+          disabled={isLoading || !stripe || !elements}
+          id="submit"
+        >
           <span id="button-text">
             {isLoading ? (
               <div className="spinner" id="spinner"></div>
