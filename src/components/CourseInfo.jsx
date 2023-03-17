@@ -2,21 +2,26 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PaymentIntent from "./Payment/PaymentIntent";
 import IsStudent from "../components/IsStudent";
+import { ImVideoCamera } from "react-icons/im";
+import { BsFillCartPlusFill } from "react-icons/bs";
 
 function CourseInfo(props) {
-  const { course } = props;
+  const { course, handleAddToCart } = props;
   const [showPaymentIntent, setShowPaymentIntent] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleBuyNow = () => {
+    setShowPaymentIntent(true);
+    setShowModal(true);
+  };
   return (
     <div>
       <div className=" overflow-hidden shadow-lg">
-        <div className="w-40">
-          <img
-            className="w-full object-cover"
-            src={course.coverImg_url}
-            alt="Sunset in the mountains"
-          />
-        </div>
-
         <div className="px-6 py-4">
           <div className="font-bold text-xl mb-2">{course.title}</div>
           <p className="text-gray-200 text-base">{course.description}</p>
@@ -33,20 +38,26 @@ function CourseInfo(props) {
             #{course.level}
           </span>
         </div>
-        <div>
-          <ul>
+        <div className="p-6">
+          <h4 className="text-xl font-bold">Lectures</h4>
+          <ul className="flex flex-col gap-4">
             {course.lectures &&
               course.lectures.map((lecture, index) => {
                 return (
-                  <li key={lecture._id}>
-                    {index}: {lecture.title}, duration: {lecture.duration}{" "}
-                    minutes{" "}
+                  <li
+                    className="pl-4 border-b justify-evenly flex items-center border-gray-500"
+                    key={lecture._id}
+                  >
+                    <p>
+                      {index}: {lecture.title}, duration: {lecture.duration}{" "}
+                      minutes
+                    </p>
                     <IsStudent>
                       <Link
                         className="bg-green-300 text-black rounded-lg  p-1"
                         to={`/courses/lecture/${lecture._id}`}
                       >
-                        Watch
+                        <ImVideoCamera />
                       </Link>
                     </IsStudent>
                   </li>
@@ -54,14 +65,24 @@ function CourseInfo(props) {
               })}
           </ul>
         </div>
-        <div>
+        <div className="flex justify-around">
           <IsStudent>
+            <button onClick={handleAddToCart} className="btn p-2  ">
+              <BsFillCartPlusFill className=" text-green-500 text-2xl" />
+            </button>
             {showPaymentIntent === false ? (
-              <button onClick={() => setShowPaymentIntent(true)}>
-                Purchase
+              <button
+                className="border-2 rounded-xl px-2 text-green-300 cursor-pointer hover:border-green-500  focus:border-green-500"
+                onClick={handleBuyNow}
+              >
+                Buy now
               </button>
             ) : (
-              <PaymentIntent productDetails={course} />
+              <PaymentIntent
+                showModal={showModal}
+                handleCloseModal={handleCloseModal}
+                productDetails={course}
+              />
             )}
           </IsStudent>
         </div>

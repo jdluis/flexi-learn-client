@@ -1,4 +1,5 @@
 import CoursesList from "../components/CoursesList";
+import ListOfProducts from "./Payment/ListOfProducts";
 
 function Home() {
   return (
@@ -16,6 +17,7 @@ function Home() {
           profesionalmente."
         </p>
       </div>
+      <ListOfProducts />
       <CoursesList />
     </div>
   );

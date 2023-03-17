@@ -9,7 +9,7 @@ import CourseInfo from "../components/CourseInfo";
 import Loading from "../components/Loading";
 import IsInstructor from "../components/IsInstructor";
 import { toast } from "react-toastify";
-
+import { addToCartService } from "../services/student.services";
 
 function CourseDetails() {
   const { courseId } = useParams();
@@ -40,12 +40,17 @@ function CourseDetails() {
       setCourseData(response.data);
       setIsFetching(false);
     } catch (error) {
-      toast.error(error.response.data.errorMessage);;
+      toast.error(error.response.data.errorMessage);
     }
   };
 
-  const handleAddToCart = () => {
-    console.log("añadido");
+  const handleAddToCart = async () => {
+    try {
+      await addToCartService(loggedStudentId, courseId)
+      toast.success("Course add to cart");
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
+    }
   };
 
   if (isFetching) {
@@ -53,17 +58,14 @@ function CourseDetails() {
   }
 
   return (
-    <div className="mt-20">
-      <UserInfo user={courseCreator} />
-      <CourseInfo course={courseData} />
-      <IsStudent>
-        <button
-          onClick={handleAddToCart}
-          className="btn p-2 bg-green-300 text-black"
-        >
-          Add to Cart
-        </button>
-      </IsStudent>
+    <div>
+      <div
+        className="bg-opacity-50"
+        style={{ backgroundImage: `url(${courseData.coverImg_url})` }}
+      >
+        <UserInfo user={courseCreator} />
+      </div>
+      <CourseInfo handleAddToCart={handleAddToCart} course={courseData} />
 
       <IsInstructor>
         {loggedInstructorId === courseData.instructor._id && (

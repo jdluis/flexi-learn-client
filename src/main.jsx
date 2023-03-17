@@ -16,6 +16,7 @@ import CourseDetails from "./pages/CourseDetails.jsx";
 import VideoPlataform from "./pages/Student/VideoPlataform.jsx";
 import NoteList from "./pages/Student/NoteList.jsx";
 import PaymentSuccess from "./pages/Payment/PaymentSuccess"
+import Cart from "./pages/Student/Cart.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/notes",
         element: <NoteList />,
+      },
+      {
+        path: "/student/cart",
+        element: <Cart />,
       },
       //Payment routes
       {
