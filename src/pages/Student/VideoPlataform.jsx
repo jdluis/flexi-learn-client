@@ -77,11 +77,7 @@ function VideoPlataform() {
     textDecoration: "none",
   };
 
-  if (openClass || needResources || needOpenComment) {
-
-  }
-
-  if (isFetching || lecture === null) {
+  if (isFetching || lecture === null || course === null) {
     return (
       <div className="flex items-center justify-center h-screen">
         <ClipLoader color="#36d7b7" size={200} cssOverride={{}} loading />
