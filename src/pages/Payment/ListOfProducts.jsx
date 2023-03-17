@@ -28,7 +28,7 @@ function ListOfProducts() {
     }
   };
 
-  if (isFetching || productsList === null) {
+  if (isFetching) {
     return <Loading />;
   }
 
@@ -37,6 +37,7 @@ function ListOfProducts() {
   return (
     <div>
       <h3>My Courses</h3>
+
       <div className="flex justify-center items-top gap-y-10 gap-x-3 flex-wrap">
         {hasPurchasedCourses ? (
           productsList.purchasedCourses.map((course) => (
