@@ -9,6 +9,7 @@ import CourseInfo from "../components/CourseInfo";
 import Loading from "../components/Loading";
 import IsInstructor from "../components/IsInstructor";
 import { toast } from "react-toastify";
+import { addToCartService } from "../services/student.services";
 
 function CourseDetails() {
   const { courseId } = useParams();
@@ -43,8 +44,13 @@ function CourseDetails() {
     }
   };
 
-  const handleAddToCart = () => {
-    console.log("añadido");
+  const handleAddToCart = async () => {
+    try {
+      await addToCartService(loggedStudentId, courseId)
+      toast.success("Course add to cart");
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
+    }
   };
 
   if (isFetching) {

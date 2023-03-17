@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { useNavigate } from "react-router-dom";
 import { GiOpenBook } from "react-icons/gi";
-import { BsPerson, BsPaperclip, BsSearch } from "react-icons/bs";
+import { BsPerson, BsPaperclip, BsFillCartFill, BsSearch } from "react-icons/bs";
 import { CiLogout } from "react-icons/ci";
 import IsStudent from "./IsStudent";
 import IsInstructor from "./IsInstructor";
@@ -24,7 +24,7 @@ export default function Root() {
   const inActiveStyles = {
     textDecoration: "none",
   };
-  
+
   const handleLogOut = () => {
     localStorage.removeItem("authToken");
     authenticateUser();
@@ -60,7 +60,8 @@ export default function Root() {
                 </p>
               </NavLink>
             </li>
-            <li>
+
+            {/*   <li>/student/cart
               <NavLink
                 className={"flex flex-col items-center"}
                 style={toggleStyles}
@@ -69,8 +70,18 @@ export default function Root() {
                 <BsSearch />
                 <p className={"text-xs"}>Search</p>
               </NavLink>
-            </li>
+            </li> */}
             <IsStudent>
+              <li>
+                <NavLink
+                  className={"flex flex-col items-center"}
+                  style={toggleStyles}
+                  to={`/student/cart`}
+                >
+                  <BsFillCartFill />
+                  <p className={"text-xs"}>Cart</p>
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   className={"flex flex-col items-center"}

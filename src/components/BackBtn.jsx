@@ -12,7 +12,7 @@ function BackBtn() {
 
 
   return (
-    <div className='absolute top-5 left-5'>
+    <div className='absolute top-5 left-5 z-50'>
       <button className='text-2xl' onClick={handleClick}>☚</button>
     </div>
   );
