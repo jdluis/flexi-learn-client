@@ -50,9 +50,9 @@ function AddCourse() {
   /* const hanleLecturesChange = (e) => {
     setLectures(e.target.value);
   }; */
-  const handleCoverImgChange = (e) => {
+/*   const handleCoverImgChange = (e) => {
     setCoverImg_url(e.target.value);
-  };
+  }; */
 
   //The result of the sum of each lecture
   const handleTotalDurationChange = () => {
@@ -133,6 +133,9 @@ function AddCourse() {
               <p>Add a new course in your carrear</p>
             </div>
             <form onSubmit={handleAddCourse}>
+            <div className="flex -mx-3">
+              <UploadImg  imageUrl={imageUrl} setImageUrl={setImageUrl} />
+              </div>
               <div className="flex -mx-3">
                 <div className="w-full px-3 mb-5">
                   <label className="text-xs font-semibold px-1">Topic</label>
