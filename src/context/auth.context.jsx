@@ -2,11 +2,11 @@ import { createContext, useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { verifyService } from "../services/auth.services";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 function AuthWrapper(props) {
+  
   // Our states of auth
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState(null);
@@ -15,10 +15,11 @@ function AuthWrapper(props) {
   const [loggedInstructorId, setIsLoggedInstructorId] = useState(null);
   const [loggedStudentId, setLoggedStudentId] = useState(null);
 
+  
   // esta funcion que va a contactar al backend, para validar el Token
   const authenticateUser = async () => {
     setIsFetching(true);
-    const navigate = useNavigate()
+    
     try {
       const response = await verifyService();
 
@@ -41,7 +42,6 @@ function AuthWrapper(props) {
       setLoggedUser(response.data);
       setIsFetching(false);
     } catch (error) {
-      navigate("/")
       console.error(error.response.data.errorMessage);
       setIsInstructor(false);
       setIsLoggedIn(false);

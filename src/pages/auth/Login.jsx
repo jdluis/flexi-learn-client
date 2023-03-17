@@ -27,8 +27,8 @@ function Login() {
       navigate("/");
       localStorage.setItem("authToken", response.data.authToken);
       authenticateUser();
-      console.log(loggedUser)
-      /* toast.success(`Welcome again ${loggedUser}`); */
+     // console.log(loggedUser)
+       toast.success(`Welcome again ${loggedUser}`); 
 
     } catch (error) {
       console.log(error.response)
