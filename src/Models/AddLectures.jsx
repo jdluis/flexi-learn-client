@@ -57,7 +57,7 @@ function AddLectures(props) {
         setIsFetching(true);
         const courseAndLectureData = await addLecturesService(newLecture, id);
         setIsFetching(false);
-        console.log(courseAndLectureData)
+       //console.log(courseAndLectureData)
         toast.success(`"${courseAndLectureData.data.lecture.title}" lecture has been add to "${courseAndLectureData.data.course.title}",  👨‍🏫`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });

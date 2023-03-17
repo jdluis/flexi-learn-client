@@ -73,7 +73,7 @@ function Profile() {
   const getInstructor = async () => {
     try {
       const insructorData = await getInstructorService(loggedInstructorId);
-      console.log(insructorData);
+     // console.log(insructorData);
       setInstructor(insructorData);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
@@ -82,7 +82,7 @@ function Profile() {
   const getStudent = async () => {
     try {
       const studentData = await getStudentService(loggedStudentId);
-      console.log(studentData.data);
+      //console.log(studentData.data);
       setStudent(studentData.data);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
