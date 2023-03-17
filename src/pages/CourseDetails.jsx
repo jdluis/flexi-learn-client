@@ -60,7 +60,7 @@ function CourseDetails() {
   return (
     <div>
       <div
-        className="bg-opacity-50"
+        className="bg-opacity-50 bg-no-repeat bg-cover"
         style={{ backgroundImage: `url(${courseData.coverImg_url})` }}
       >
         <UserInfo user={courseCreator} />

@@ -13,7 +13,6 @@ function UploadImg(props) {
   };
   return (
     <>
-      {" "}
       {imageUrl ? (
         <div className="w-28 h-28">
           <img
