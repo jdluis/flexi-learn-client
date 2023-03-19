@@ -24,7 +24,7 @@ function UploadImg(props) {
         </div>
       ) : null}
       {isEditing && (
-        <div>
+        <div className="w-1/2">
           <input
             type="file"
             name="image"
