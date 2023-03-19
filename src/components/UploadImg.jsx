@@ -30,6 +30,7 @@ function UploadImg(props) {
             name="image"
             onChange={handleFileUpload}
             disabled={isUploading}
+            maxLength={"12"}
           />
         </div>
       )}

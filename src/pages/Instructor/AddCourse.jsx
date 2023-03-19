@@ -133,7 +133,7 @@ function AddCourse() {
               <p>Add a new course in your carrear</p>
             </div>
             <form onSubmit={handleAddCourse}>
-              <div className="flex mx-3 items-center justify-center">
+              <div className="flex flex-col mx-3 items-center justify-center">
                 <UploadImg
                   isEditing={true}
                   imageUrl={imageUrl}
