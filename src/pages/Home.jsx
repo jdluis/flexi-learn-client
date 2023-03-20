@@ -1,4 +1,5 @@
 import CoursesList from "../components/CoursesList";
+import IsStudent from "../components/IsStudent";
 import ListOfProducts from "./Payment/ListOfProducts";
 
 function Home() {
@@ -17,7 +18,9 @@ function Home() {
           professionally."
         </p>
       </div>
-      <ListOfProducts />
+      <IsStudent>
+        <ListOfProducts />
+      </IsStudent>
       <CoursesList />
     </div>
   );

@@ -6,8 +6,7 @@ import CoursePreview from "../../components/CoursePreview.jsx";
 import Loading from "../../components/Loading.jsx";
 
 function ListOfProducts() {
-  const { loggedInstructorId, loggedStudentId, loggedUser } =
-    useContext(AuthContext);
+  const { loggedUser } = useContext(AuthContext);
 
   const [productsList, setProductsList] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
