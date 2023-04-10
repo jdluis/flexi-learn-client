@@ -91,7 +91,7 @@ function Login() {
                 </div>
                 <div className="relative">
                   <button className="bg-blue-500 text-white rounded-md px-2 py-1">
-                    Submit
+                    Login
                   </button>
                 </div>
               </form>
