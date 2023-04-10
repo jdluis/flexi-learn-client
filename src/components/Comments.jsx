@@ -1,6 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import Modal from "react-modal";
-import { addTestimonialService } from "../services/testimonial.services";
+import {
+  addTestimonialService,
+  deleteTestimonialService,
+} from "../services/testimonial.services";
 import { AuthContext } from "../context/auth.context";
 import { useParams } from "react-router-dom";
 import { editLecturesService } from "../services/lectures.services";
@@ -8,7 +11,8 @@ import Loading from "./Loading";
 import { toast } from "react-toastify";
 import { IoMdSend } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
-import moment from 'moment';
+import { FaTrashAlt } from "react-icons/fa";
+import moment from "moment";
 
 Modal.setAppElement("#root");
 
@@ -20,11 +24,6 @@ function Comments(props) {
   const { loggedUser } = useContext(AuthContext);
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [addingTestimonial, setAddingTestimonial] = useState(false);
-
-  useEffect(() => {
-    setNeedRender(!needRender);
-  }, [addingTestimonial]);
 
   const handleOpenModal = (e) => {
     e.preventDefault();
@@ -36,12 +35,13 @@ function Comments(props) {
   };
 
   const handleMessage = (e) => {
+    e.preventDefault();
     setMessage(e.target.value);
   };
 
-  const handleAddComment = async () => {
+  const handleAddTestimonial = async (e) => {
     try {
-      setAddingTestimonial(true);
+      
       const newTestimonial = await addTestimonialService({
         message,
         author: loggedUser._id,
@@ -51,9 +51,19 @@ function Comments(props) {
         testimonial: newTestimonial.data._id,
       });
 
-      setAddingTestimonial(false);
       getLectureData();
       toast.success(`Comment added: "${message}"`);
+    } catch (error) {
+      toast.error(error.response.data.errorMessage);
+    }
+  };
+
+  const handleDeleteTestimonial = async (idTestimonial) => {
+    try {
+      await deleteTestimonialService(idTestimonial);
+      getLectureData();
+
+      toast.success(`Comment deleted`);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
     }
@@ -77,18 +87,36 @@ function Comments(props) {
               >
                 <div className="flex">
                   <div className="h-10 w-10">
-                    <img className="object-cover w-full h-full" src={testimonial.author.profileImg_url} alt="" />
+                    <img
+                      className="object-cover w-full h-full"
+                      src={testimonial.author.profileImg_url}
+                      alt=""
+                    />
                   </div>
                   <div className="flex flex-col pl-2">
                     <h4 className="font-bold text-slate-300 text-sm">
                       {testimonial.author.first_name}{" "}
                       {testimonial.author.last_name}{" "}
                     </h4>
-                    <p className="text-gray-500 text-sm">{moment(testimonial.createdAt).format('DD MMM YYYY')}</p>
+                    <p className="text-gray-500 text-sm">
+                      {moment(testimonial.createdAt).format("DD MMM YYYY")}
+                    </p>
                   </div>
                 </div>
-                <div>
-                  <p className="text-slate-300 text-sm pl-4">{testimonial.message}</p>
+                <div className="flex">
+                  {testimonial.author._id === loggedUser._id && (
+                    <div>
+                      <button
+                        className="  text-red-600"
+                        onClick={() => handleDeleteTestimonial(testimonial._id)}
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </div>
+                  )}
+                  <p className="text-slate-300 text-sm pl-4">
+                    {testimonial.message}
+                  </p>
                 </div>
               </div>
             );
@@ -117,7 +145,7 @@ function Comments(props) {
             value={message}
             onChange={handleMessage}
           ></textarea>
-          <button className="text-gray-400 text-xl" onClick={handleAddComment}>
+          <button className="text-gray-400 text-xl" onClick={handleAddTestimonial}>
             <IoMdSend />
           </button>
         </div>
