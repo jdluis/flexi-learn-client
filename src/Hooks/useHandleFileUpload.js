@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { uploadImageService } from "../services/upload.services";
 
 // below function should be the only function invoked when the file type input changes => onChange={handleFileUpload}
@@ -31,7 +32,13 @@ const useHandleFileUpload = async (
 
     setIsUploading(false); // to stop the loading animation
   } catch (error) {
-    navigate("/error");
+    setIsUploading(false);
+    if (error.response.status === 500) {
+      toast.error(`${error.response.data.errorMessage}: 👨‍🏫`);
+      toast.info(`Try again!: 👨‍🏫`);
+    } else {
+      navigate("/error");
+    }
   }
 };
 

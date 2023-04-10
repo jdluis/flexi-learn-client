@@ -9,7 +9,7 @@ function CoursePreview(props) {
     <div className={"w-32 h-full rounded overflow-hidden shadow-lg"}>
       <Link to={`/courses/details/${course._id}`} className={"w-full"}>
         <div className={"w-full"}>
-          <div>
+          <div className="w-32 h-28">
             <img
               className="w-full h-full object-cover rounded-xl shadow-lg"
               src={course.coverImg_url ?? course.coverImg_url}

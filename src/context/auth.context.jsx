@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const AuthContext = createContext();
 
 function AuthWrapper(props) {
+  
   // Our states of auth
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState(null);
@@ -14,9 +15,11 @@ function AuthWrapper(props) {
   const [loggedInstructorId, setIsLoggedInstructorId] = useState(null);
   const [loggedStudentId, setLoggedStudentId] = useState(null);
 
+  
   // esta funcion que va a contactar al backend, para validar el Token
   const authenticateUser = async () => {
     setIsFetching(true);
+    
     try {
       const response = await verifyService();
 

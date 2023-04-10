@@ -23,19 +23,22 @@ function Login() {
     };
     try {
       const response = await loginService(user);
-     
+
       navigate("/");
       localStorage.setItem("authToken", response.data.authToken);
       authenticateUser();
-      console.log(loggedUser)
-      /* toast.success(`Welcome again ${loggedUser}`); */
-
+      // console.log(loggedUser)
+      toast.success(`Welcome again ${loggedUser}`);
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
       if (error.response.status === 400) {
         toast.error(`${error.response.data.errorMessage}: 👨‍🏫`);
       } else {
-        toast.error(`Ups! Damm it..👨🏻‍💻 ${error.response.data.errorMessage}`);
+        if (error.response.status === 502) {
+          toast.error(`Ups! Damm it..👨🏻‍💻 ${error.response.data.errorMessage}`);
+        } else {
+          toast.error(`Ups! Damm it..👨🏻‍💻 ${error.response.data.errorMessage}`);
+        }
       }
     }
   };

@@ -60,7 +60,7 @@ function CourseDetails() {
   return (
     <div>
       <div
-        className="bg-opacity-50"
+        className="bg-opacity-50 bg-no-repeat bg-cover"
         style={{ backgroundImage: `url(${courseData.coverImg_url})` }}
       >
         <UserInfo user={courseCreator} />
@@ -71,7 +71,7 @@ function CourseDetails() {
         {loggedInstructorId === courseData.instructor._id && (
           <Link
             to={`/courses/edit/${courseData._id}`}
-            className="btn p-2 bg-green-300 text-black"
+            className="btn p-2 bg-green-300 text-black absolute bottom-20 left-10"
           >
             Edit
           </Link>

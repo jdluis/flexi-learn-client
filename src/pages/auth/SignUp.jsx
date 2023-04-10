@@ -7,7 +7,7 @@ function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [type, setType] = useState(null);
+  const [type, setType] = useState("student");
 
   const hanleTypeChange = (e) => {
     setType(e.target.value);
@@ -73,7 +73,7 @@ function SignUp() {
                       <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
                     </div>
                     <select
-                      defaultValue={""}
+                      defaultValue={"student"}
                       onChange={hanleTypeChange}
                       className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                     >

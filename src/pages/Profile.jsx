@@ -28,17 +28,17 @@ function Profile() {
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
   const [language, setLanguage] = useState("");
-  const [topics, setTopics] = useState([]);
+  //const [topics, setTopics] = useState([]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
 
-  const handleTopics = (e) => {
+  /* const handleTopics = (e) => {
     if (topics.includes(e.target.value)) {
     } else {
       setTopics([...topics, e.target.value]);
     }
-  };
+  }; */
   const handleIsEditing = () => {
     setIsEditing(!isEditing);
   };
@@ -73,7 +73,7 @@ function Profile() {
   const getInstructor = async () => {
     try {
       const insructorData = await getInstructorService(loggedInstructorId);
-      console.log(insructorData);
+     // console.log(insructorData);
       setInstructor(insructorData);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
@@ -82,7 +82,7 @@ function Profile() {
   const getStudent = async () => {
     try {
       const studentData = await getStudentService(loggedStudentId);
-      console.log(studentData.data);
+      //console.log(studentData.data);
       setStudent(studentData.data);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
@@ -184,7 +184,7 @@ function Profile() {
                 placeholder="Language"
               />
             </div>
-            {student && (
+           {/*  {student && (
               <div className="mt-5 ">
                 <h4 className="text-white">Topics:</h4>
                 <div className="flex flex-col m-auto flex-wrap">
@@ -199,7 +199,7 @@ function Profile() {
                   </p>
                 </div>
               </div>
-            )}
+            )} */}
           </>
         )}
       </div>

@@ -228,10 +228,14 @@ function EditCourse() {
                   </div>
                 </div>
               </div>
-              <div className="flex -mx-3">
-              <UploadImg imageUrl={imageUrl} setImageUrl={setImageUrl} />
+              <div className="flex mx-3 items-center justify-center">
+                <UploadImg
+                  isEditing={true}
+                  imageUrl={imageUrl}
+                  setImageUrl={setImageUrl}
+                />
               </div>
-              <div className="flex -mx-3">
+              <div className="flex mx-3">
                 <div className="w-full px-3 mb-12">
                   <label className="text-xs font-semibold px-1">
                     Description

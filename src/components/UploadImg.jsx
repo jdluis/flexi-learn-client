@@ -13,7 +13,6 @@ function UploadImg(props) {
   };
   return (
     <>
-      {" "}
       {imageUrl ? (
         <div className="w-28 h-28">
           <img
@@ -25,12 +24,13 @@ function UploadImg(props) {
         </div>
       ) : null}
       {isEditing && (
-        <div>
+        <div className="w-1/2">
           <input
             type="file"
             name="image"
             onChange={handleFileUpload}
             disabled={isUploading}
+            maxLength={"12"}
           />
         </div>
       )}

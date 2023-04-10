@@ -31,7 +31,7 @@ function CheckoutForm(props) {
 
   const removeProductFromCart = async () => {
     try {
-      console.log("Aquiiii intento eliminar")
+      //console.log("Aquiiii intento eliminar")
       await removeProductFromCartServices(loggedStudentId, productDetails._id);
     } catch (error) {
       toast.error(error.response.data.errorMessage);
