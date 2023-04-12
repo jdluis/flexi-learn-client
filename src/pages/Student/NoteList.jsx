@@ -120,7 +120,7 @@ const NoteList = () => {
                       className={`cursor-pointer w-4 h-4  bg-${getStatusColor(
                         note.status
                       )}-500 `}
-                      value={status}
+                      value={note.status}
                       noteId={note._id}
                     >
                       <option disabled value="">
